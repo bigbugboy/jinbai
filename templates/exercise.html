@@ -1,10 +1,87 @@
 {% extends 'base.html' %}
 
 
+{% block css %}
+<style>
+    #sc-info {
+        padding-bottom: 4px;
+        border-bottom: 4px solid rgb(25, 132, 52);
+    }
+    .title_block {
+        font-size: 20px;
+        font-weight: bolder;
+        padding: 10px;
+        padding-left: 0px;
+        margin-top: 20px;
+    }
+    .choice_block {
+        font-size: 20px;
+        padding: 10px;
+        border: 1px solid rgb(25, 132, 52);
+    }
+    .choice_block:hover {
+        background-color: wheat;
+    }
+    #confirmbtn {
+        font-size: 20px;
+        font-weight: bolder;
+    }
+    #confirmbtn:hover {
+        background-color:  rgb(25, 132, 52);
+    }
+    .answer, .description {
+        font-size: 20px;
+        line-height: 35px;
+        margin: 10px;
+    }
+</style>
+
+{% endblock %}
+
+
 {% block content %}
 {% include 'partials/header.html' %}
 
-<h2>答题区</h2>
+
+<div class="columns p-6">
+    <div class="column is-6">
+        <p id="sc-info">
+            <span class="mr-5"><small class="mr-2">题号:</small><strong>123456</strong></span>
+            <span class="mr-5"><small class="mr-2">标签:</small><strong>字符串</strong></span>
+            <span><small class="mr-2">难度:</small><strong>2颗星</strong></span>
+        </p>
+        <div class="block title_block">关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是：</div>
+        <div class="block choice_block">10</div>
+        <div class="block choice_block">20</div>
+        <div class="block choice_block">30</div>
+        <div class="block choice_block">40</div>
+        <div class="buttons is-centered">
+            <button class="button is-rounded is-success is-outlined" id="confirmbtn">确认&解析</button>
+        </div>
+       
+    </div>
+    <div class="column is-6">
+        <p class="answer">答案: <strong>A</strong></p>
+        <p class="description">解析: <strong>
+        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
+        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
+        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
+        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
+        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
+        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
+        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
+        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
+        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
+        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
+        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
+        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
+        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
+        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
+        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
+        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
+        </strong></p>
+    </div>
+</div>
 
 
 {%endblock%}

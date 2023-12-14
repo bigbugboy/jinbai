@@ -1,10 +1,18 @@
 <style>
+    .navbar {
+        background-color: transparent !important;
+    }
+
     .title {
         color: rgb(25, 132, 52) !important;
     }
+
     .navbar-menu .is-active {
+        background-color: wheat !important;
+        color:  rgb(25, 132, 52) !important;
+        border-radius: 5px;
+
     }
-    
 </style>
 
 
@@ -23,10 +31,11 @@
 
     <div id="navbar-menu" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item {%if request.path_info == '/exercise/'%}is-active{%endif%}" href="{% url 'exercise' %}">
+            <a class="navbar-item mx-4 is-size-5 {%if request.path_info == '/exercise/'%}is-active{%endif%}"
+                href="{% url 'exercise' %}">
                 <strong>开始吧</strong>
             </a>
-            <a class="navbar-item" href="#vip"><strong>VIP</strong></a>
+            <a class="navbar-item is-size-5" href="#vip"><strong>VIP</strong></a>
         </div>
 
         <div class="navbar-end">

@@ -2,66 +2,57 @@
 
 {% block css %}
 <style>
-
-    #main {
-        height: 100vh;
-        width: 100%;
-        background-color: rgb(41, 84, 119);
-    }
-
-    #main>div.column:first-child {
-        height: 450px;
-        background-color: grey;
-        border: 1px solid white;
-    }
-
-    #login {
-        height: 450px;
-        background-color: white;
-        padding: 30px !important;
-    }
+  #main {
+    height: 100vh;
+    width: 100%;
+  }
+  #sendcodebtn {
+    color: rgb(25, 132, 52) !important;
+  }
+  #loginbtn:hover{
+    color: #fff;
+    background-color: rgb(25, 132, 52) !important;
+  }
 </style>
 {% endblock %}
 
 
 {% block content %}
-
-<div class="columns is-gapless is-align-items-center is-justify-content-center" id="main">
-    <div class="column is-hidden-mobile is-one-third is-two-fifth-widescreen is-one-fifth-fullhd">占位</div>
-    <div class="column is-one-third is-two-fifth-widescreen is-one-fifth-fullhd" id="login">
-        <h1 class="title">CPC</h1>
-        <form action="{% url 'login' %}" method="post">
-          {% csrf_token %}
-            <div class="field my-6">
-              <div class="field has-addons">
-                <p class="control">
-                  <a class="button is-static">
-                    +44
-                  </a>
-                </p>
-                <p class="control is-expanded">
-                  <input class="input" type="tel" name="telephone" placeholder="手机号">
-                </p>
-              </div>
-              </div>
-            <div class="field has-addons my-6">
-                <div class="control is-expanded">
-                    <input class="input" type="text" name="code" placeholder="验证码">
-                </div>
-                <p class="control">
-                  <a class="button is-info">
-                    发送验证码
-                  </a>
-                </p>
-            </div>
-            <div class="field is-grouped is-grouped-centered">
-                <div class="control">
-                  <button class="button is-info is-rounded">登录</button>
-                </div>
-            </div>
-            <p class="has-text-centered mt-4">验证即登录，未注册将自动创建账号</p>
-        </form>
-    </div>
+<div class="columns is-align-items-center is-justify-content-center" id="main">
+  <div class="column box is-one-third is-two-fifth-widescreen is-one-fifth-fullhd">
+    <h1 class="title has-text-centered py-6"><a href="{% url 'index' %}">xiaofeiniu.top</a></h1>
+    <p class="has-text-centered mt-4">验证即登录，未注册将自动创建账号</p>
+    <form action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+      <div class="field my-6">
+        <div class="field has-addons">
+          <p class="control">
+            <a class="button is-static">
+              +86
+            </a>
+          </p>
+          <p class="control is-expanded">
+            <input class="input" type="tel" name="telephone" placeholder="手机号">
+          </p>
+        </div>
+      </div>
+      <div class="field has-addons my-6">
+        <div class="control is-expanded">
+          <input class="input" type="text" name="code" placeholder="验证码">
+        </div>
+        <p class="control">
+          <a class="button" id="sendcodebtn">
+            发送验证码
+          </a>
+        </p>
+      </div>
+      <div class="field is-grouped is-grouped-centered pb-4">
+        <div class="control">
+          <button class="button is-rounded" id="loginbtn">登录</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 
 
