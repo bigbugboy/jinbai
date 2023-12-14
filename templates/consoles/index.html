@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<!-- {% include 'partials/header.html' %} -->
+
+{% with x_hash=request.x_hash %}
+<div class="m-6">
+    <div class="tabs is-boxed">
+        <ul>
+            <li class="{% if x_hash == 'userinfo' %}is-active{%endif%}">
+                <a href="?hash=userinfo"><span>个人信息</span></a>
+            </li>
+            <li class="{% if x_hash == 'daily' %}is-active{%endif%}">
+                <a href="?hash=daily"><span>今日答题</span></a>
+            </li>
+            <li class="{% if x_hash == 'collected' %}is-active{%endif%}">
+                <a href="?hash=collected"><span>收藏题目</span></a>
+            </li>
+        </ul>
+    </div>
+    
+    
+    {% if x_hash == 'userinfo' %}
+        {% include 'consoles/userinfo.html' %}
+    {% elif x_hash == 'daily' %}
+        {% include 'consoles/daily.html' %}
+    {% elif x_hash == 'collected' %}
+        {% include 'consoles/collected.html' %}
+    {% endif %}
+</div>
+    
+
+{% endwith %}
+
+{% endblock %}

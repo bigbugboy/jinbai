@@ -1,15 +1,15 @@
 <style>
     .navbar-menu .is-active {
         font-weight: bolder !important;
-        color: #fff !important;
-        background-color: rgb(34, 208, 178) !important;
+        color: #000 !important;
+        background-color: rgb(254, 223, 144) !important;
     }
 </style>
 
 
-<nav class="navbar is-light" role="navigation" aria-label="main navigation">
+<nav class="navbar is-info" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
+        <a class="navbar-item" href="{% url 'index' %}">
             <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
         </a>
 
@@ -22,14 +22,18 @@
 
     <div id="navbar-menu" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item is-active">首页</a>
-            <a class="navbar-item" href="#features">特色</a>
-            <a class="navbar-item" href="#price">价格</a>
+            <a class="navbar-item {%if request.path_info == '/'%}is-active{%endif%}" href="{% url 'index' %}">首页</a>
+            <a class="navbar-item {%if request.path_info == '/exercise/'%}is-active{%endif%}" href="{% url 'exercise' %}">开始吧</a>
+            <a class="navbar-item" href="#vip">VIP</a>
         </div>
 
         <div class="navbar-end">
             <div class="navbar-item">
-                <a class="button is-primary"><strong>登录&nbsp;-&nbsp;注册</strong></a>
+                {% if request.user.is_authenticated %}
+                <a class="button is-warning" href="{% url 'console' %}" target="_blank">个人中心</a>
+                {% else %}
+                <a class="button is-warning" href="{% url 'login' %}"><strong>登录&nbsp;-&nbsp;注册</strong></a>
+                {% endif %}
             </div>
         </div>
     </div>

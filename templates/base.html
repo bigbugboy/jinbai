@@ -3,11 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello</title>
+    <title>{% block title %}Hello{% endblock %}</title>
     <link href="https://cdn.bootcdn.net/ajax/libs/bulma/0.9.4/css/bulma.min.css" rel="stylesheet">
     {% block css %} {% endblock %}
   </head>
   <body>
   {% block content %} {% endblock %}
+  {% block js %} {% endblock %}
   </body>
 </html>

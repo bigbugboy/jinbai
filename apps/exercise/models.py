@@ -4,7 +4,15 @@ from django.db import models
 class Tag(models.Model):
     objects: models.QuerySet
     name = models.CharField(max_length=32, unique=True, blank=False, null=False)
-    description = models.CharField(max_length=255, default='')
+    description = models.CharField(max_length=255, default='', blank=True)
+
+    class Meta:
+        verbose_name = '标签'
+        verbose_name_plural = verbose_name
+
+
+    def __str__(self) -> str:
+        return self.name
 
 
 
@@ -18,7 +26,7 @@ class SingleChoice(models.Model):
     )
 
     tags = models.ManyToManyField(to=Tag)
-    star = models.SmallIntegerField(default=1, choices=((i + 1, f'{i}颗星')for i in range(3)), help_text='难度系数')
+    star = models.SmallIntegerField(default=1, choices=((i + 1, f'{i+1}颗星')for i in range(3)), help_text='难度系数')
     title = models.TextField(null=False)
     choice_a = models.CharField(max_length=255, null=False)
     choice_b = models.CharField(max_length=255, null=False)
@@ -33,4 +41,8 @@ class SingleChoice(models.Model):
     right_counts = models.IntegerField(default=0, help_text='答对次数')
     wrong_counts = models.IntegerField(default=0, help_text='答错次数')
     collect_counts = models.IntegerField(default=0, help_text='被用户收藏次数')
+
+    class Meta:
+        verbose_name = '单选题'
+        verbose_name_plural = verbose_name
     
