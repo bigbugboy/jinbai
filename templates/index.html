@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+
+{% block css %}
+<style>
+    #price {
+        background-color: black;
+        color: rgb(148 163 184);
+        padding-top: 200px;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+{% include 'partials/header.html' %}
+
+<main>
+    <div style="height: 800px;"></div>
+    <section class="section" id="features">
+        <h1 class="title">Section</h1>
+        <h2 class="subtitle">
+            A simple container to divide your page into <strong>sections</strong>, like the one you're currently
+            reading.
+        </h2>
+    </section>
+    <!-- 会费价格 -->
+    <section id="price" aria-label="Pricing">
+        <div class="columns">
+            <div class="column is-full has-text-centered">
+                <h1 class="title has-text-white">价格方案简单实惠</h1>
+                <p>你喜欢的方式这里都有你喜欢的方式这里都有你喜欢的方式这里都有你喜欢的方式这里都有</p>
+            </div>
+        </div>
+        <!-- 三种会费方式 -->
+        <div class="columns">
+            <div class="column is-one-third ml-6">
+                <h1 class="title has-text-white mb-6">&yen;9</h1>
+                <h3 class="subtitle has-text-white">Starter</h3>
+                <p>Good for anyone who is self-employed and just getting started.</p>
+                <button class="button is-outlined">Get started</button>
+                <ul role="list" class="">
+                    <li><span>Send 10 quotes and invoices</span></li>
+                    <li><span>Send 10 quotes and invoices</span></li>
+                    <li><span>Send 10 quotes and invoices</span></li>
+                    <li><span>Send 10 quotes and invoices</span></li>
+                    <li><span>Send 10 quotes and invoices</span></li>
+                    <li><span>Send 10 quotes and invoices</span></li>
+                </ul>
+                
+            </div>
+            <div class="column"></div>
+        </div>
+    </section>
+</main>
+
+{% endblock %}
