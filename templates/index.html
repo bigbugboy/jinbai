@@ -2,6 +2,16 @@
 
 
 {% block css %}
+<style>
+.box {
+    background-color: transparent !important;
+    color: rgb(25, 132, 52) !important;
+}
+#sc-info {
+    padding-bottom: 4px;
+    border-bottom: 3px solid rgb(25, 132, 52);
+}
+</style>
 {% endblock %}
 
 
@@ -9,11 +19,33 @@
 {% include 'partials/header.html' %}
 
 <main>
-    <section class="section" style="height: 100vh; background-color: grey;">
-        <h1 class="title">第1屏</h1>
-    </section>
-    <section class="section" style="height: 100vh; background-color: wheat;">
-        <h1 class="title">第2屏</h1>
+    <section class="section" style="height: 100vh;">
+        <div class="columns mt-6">
+          <div class="column is-one-third has-text-left">
+            <h1 class="title my-6">让理论更结实</h1>
+            <p class="my-3 is-size-5">优雅胜于丑陋，简单胜于复杂</p>
+            <p class="my-3 is-size-5">面对不确定性，拒绝妄加猜测</p>
+            <p class="my-3 is-size-5">简单优于复杂,   复杂优于凌乱</p>
+            <p class="my-3 is-size-5">扁平优于嵌套，稀疏优于稠密</p>
+            <p class="my-6 is-size-6">— Python之禅</p>
+            <a href="" class="button is-primary is-outlined is-rounded has-text-centered">开始吧</a>
+          </div>
+          <div class="column">
+            <div class="box">
+              <p class="block" id="sc-info">
+                <span class="mr-6"><small class="mr-2">题号:</small>123456</span>
+                <span><small class="mr-2">标签:</small>字符串</span>
+              </p>
+              <h1 class="is-size-5">关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是：</h1>
+              <p>1 def test():</p>
+              <p>2     print(a)</p>
+              <p>     a = 100</p>
+              <p>4</p>
+              <p>5 test()</p>  
+            </div>
+              
+          </div>
+        </div>
     </section>
 
     <!-- 会费价格 -->

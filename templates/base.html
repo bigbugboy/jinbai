@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
+    {% load static %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Hello{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link href="https://cdn.bootcdn.net/ajax/libs/bulma/0.9.4/css/bulma.min.css" rel="stylesheet">
+    
+    <style>
+      body {
+        color: rgb(25, 132, 52) !important;
+        background-image: url('{% static "img/bg.png" %}');
+      }
+    </style>
     {% block css %} {% endblock %}
   </head>
   <body>
-  {% block content %} {% endblock %}
+  <main class="p-6">
+    {% block content %} {% endblock %}
+  </main>
   {% block js %} {% endblock %}
   </body>
 </html>

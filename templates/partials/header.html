@@ -1,16 +1,17 @@
 <style>
-    .navbar-menu .is-active {
-        font-weight: bolder !important;
-        color: #000 !important;
-        background-color: rgb(254, 223, 144) !important;
+    .title {
+        color: rgb(25, 132, 52) !important;
     }
+    .navbar-menu .is-active {
+    }
+    
 </style>
 
 
-<nav class="navbar is-info" role="navigation" aria-label="main navigation">
+<nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="{% url 'index' %}">
-            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+            <h1 class="title">xiaofeiniu.top</h1>
         </a>
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
@@ -22,17 +23,18 @@
 
     <div id="navbar-menu" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item {%if request.path_info == '/'%}is-active{%endif%}" href="{% url 'index' %}">首页</a>
-            <a class="navbar-item {%if request.path_info == '/exercise/'%}is-active{%endif%}" href="{% url 'exercise' %}">开始吧</a>
-            <a class="navbar-item" href="#vip">VIP</a>
+            <a class="navbar-item {%if request.path_info == '/exercise/'%}is-active{%endif%}" href="{% url 'exercise' %}">
+                <strong>开始吧</strong>
+            </a>
+            <a class="navbar-item" href="#vip"><strong>VIP</strong></a>
         </div>
 
         <div class="navbar-end">
             <div class="navbar-item">
                 {% if request.user.is_authenticated %}
-                <a class="button is-warning" href="{% url 'console' %}" target="_blank">个人中心</a>
+                <a class="button" href="{% url 'console' %}" target="_blank">个人中心</a>
                 {% else %}
-                <a class="button is-warning" href="{% url 'login' %}"><strong>登录&nbsp;-&nbsp;注册</strong></a>
+                <a class="button" href="{% url 'login' %}"><strong>登录&nbsp;-&nbsp;注册</strong></a>
                 {% endif %}
             </div>
         </div>
