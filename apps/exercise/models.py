@@ -20,14 +20,15 @@ class SingleChoice(models.Model):
     objects: models.query.QuerySet
 
     status_choices = (
-        (0, '下架'),
         (1, '待上架'),
-        (2, '已上架'),
+        (2, '上架'),
+        (0, '下架'),
     )
 
     tags = models.ManyToManyField(to=Tag)
     star = models.SmallIntegerField(default=1, choices=((i + 1, f'{i+1}颗星')for i in range(3)), help_text='难度系数')
-    title = models.TextField(null=False)
+    no = models.CharField(max_length=255, blank=False, null=False, help_text='格式: <标签编号>-<题目唯一编号>')
+    title = models.TextField(blank=False, null=False)
     choice_a = models.CharField(max_length=255, null=False)
     choice_b = models.CharField(max_length=255, null=False)
     choice_c = models.CharField(max_length=255, null=False)
