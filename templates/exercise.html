@@ -3,10 +3,16 @@
 
 {% block css %}
 <style>
+    .box {
+        background-color: transparent !important;
+        color: rgb(25, 132, 52) !important;
+    }
+
     #sc-info {
         padding-bottom: 4px;
         border-bottom: 4px solid rgb(25, 132, 52);
     }
+
     .title_block {
         font-size: 20px;
         font-weight: bolder;
@@ -14,74 +20,165 @@
         padding-left: 0px;
         margin-top: 20px;
     }
+
     .choice_block {
         font-size: 20px;
         padding: 10px;
         border: 1px solid rgb(25, 132, 52);
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 3px 3px 0 rgb(25, 132, 52);;
+        transition: all .3s ease;
     }
     .choice_block:hover {
-        background-color: wheat;
+        box-shadow: none;
     }
+    .choice_block.selected {
+        background-color:  wheat;
+    }
+    .choice_block.success {
+        color: #fff;
+        background-color:  rgb(25, 132, 52);
+    }
+    .choice_block.failed {
+        color: #fff;
+        background-color:  red;
+    }
+
     #confirmbtn {
         font-size: 20px;
         font-weight: bolder;
     }
+
     #confirmbtn:hover {
-        background-color:  rgb(25, 132, 52);
+        background-color: rgb(25, 132, 52);
     }
-    .answer, .description {
+
+    .answer,
+    .description {
         font-size: 20px;
         line-height: 35px;
         margin: 10px;
     }
 </style>
-
 {% endblock %}
 
 
 {% block content %}
 {% include 'partials/header.html' %}
-
-
-<div class="columns p-6">
-    <div class="column is-6">
-        <p id="sc-info">
-            <span class="mr-5"><small class="mr-2">题号:</small><strong>123456</strong></span>
-            <span class="mr-5"><small class="mr-2">标签:</small><strong>字符串</strong></span>
-            <span><small class="mr-2">难度:</small><strong>2颗星</strong></span>
-        </p>
-        <div class="block title_block">关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是：</div>
-        <div class="block choice_block">10</div>
-        <div class="block choice_block">20</div>
-        <div class="block choice_block">30</div>
-        <div class="block choice_block">40</div>
-        <div class="buttons is-centered">
-            <button class="button is-rounded is-success is-outlined" id="confirmbtn">确认&解析</button>
-        </div>
-       
+<div class="box mt-6" id="app">
+    <p id="sc-info">
+        <span class="mr-5"><small class="mr-2">题号:</small><strong>{[ sc.no ]}</strong></span>
+        <span class="mr-5"><small class="mr-2">标签:</small><strong>{[ scTags ]}</strong></span>
+        <span><small class="mr-2">难度:</small><strong>{[sc.star]}颗星</strong></span>
+    </p>
+    <div class="block title_block">{[sc.title]}</div>
+    <div class="block choice_block" @click="selectOne('a')"><span>A&nbsp;|&nbsp;</span> {[sc.choice_a]}</div>
+    <div class="block choice_block" @click="selectOne('b')"><span>B&nbsp;|&nbsp;</span> {[sc.choice_b]}</div>
+    <div class="block choice_block" @click="selectOne('c')"><span>C&nbsp;|&nbsp;</span> {[sc.choice_c]}</div>
+    <div class="block choice_block" @click="selectOne('d')"><span>D&nbsp;|&nbsp;</span> {[sc.choice_d]}</div>
+    <div class="buttons is-centered">
+        <button class="button is-rounded is-success is-outlined" id="confirmbtn" @click="postQuestion">确认&解析</button>
     </div>
-    <div class="column is-6">
-        <p class="answer">答案: <strong>A</strong></p>
-        <p class="description">解析: <strong>
-        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
-        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
-        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
-        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
-        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
-        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
-        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
-        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
-        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
-        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
-        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
-        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
-        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
-        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
-        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
-        关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的
-        </strong></p>
+    <div class="block">
+        <p v-if="answer" class="answer">答案: <strong>{[answer]}</strong></p>
+        <p v-if="description" class="description">解析: <strong>{[description]}</strong></p>
     </div>
 </div>
 
 
 {%endblock%}
+
+
+{% block js %}
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.js"></script>
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    var app = new Vue({
+        el: '#app',
+        delimiters: ["{[", "]}"],
+        data: function () {
+            return {
+                sc: {
+                    tags: []
+                },
+                selected_choice: '',
+                selected_block: null,
+                answer: '',
+                description: '',
+
+            }
+        },
+        computed: {
+            scTags: function () {
+                let tags = []
+                this.sc.tags.forEach(element => {
+                    tags.push(element.name)
+                });
+                return tags.join(',')
+            },
+        },
+        methods: {
+            getOneQuestion: function () {
+                fetch("{% url 'scstart' %}").then((res) => res.json()).then((data) => {
+                    this.sc = data
+                })
+            },
+            postQuestion: function () {
+                fetch("{% url 'scstart' %}", {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application.json',
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken,
+                        'todo-sc-no': '101-123',
+                        'right-choice': 'b'
+                    }
+                }).then((res) => res.json()).then((data) => {
+                    this.answer = data.rc;
+                    this.description = data.desc;
+                    this.selected_block.classList.remove('selected');
+                    console.log('111')
+                    console.log(data.status === true)
+                    console.log(data.status)
+                    console.log(data)
+                    if (data.status === true) {
+                        this.selected_block.classList.add('success');
+                    } else {
+                        this.selected_block.classList.add('failed');
+                    }
+                })
+            },
+            selectOne: function(e, value) {
+                console.log('1', value)
+                choises = document.getElementsByClassName('choice_block')
+                for (let index = 0; index < choises.length; index++) {
+                    choises[index].classList.remove('selected')
+                }
+                e.target.classList.add('selected')
+                this.selected_block = e.target;
+                this.selected_choice = ''
+            },
+        },
+        mounted() {
+            this.getOneQuestion()
+        },
+    })
+</script>
+{% endblock %}
