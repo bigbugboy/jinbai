@@ -6,6 +6,7 @@
     .box {
         background-color: transparent !important;
         color: rgb(25, 132, 52) !important;
+        box-shadow: 0 1.5em 2em 0.875em rgba(10, 10, 10, .1), 0 0 0 2px rgba(10, 10, 10, .02);
     }
 
     #sc-info {
@@ -27,27 +28,58 @@
         border: 1px solid rgb(25, 132, 52);
         border-radius: 10px;
         cursor: pointer;
-        box-shadow: 3px 3px 0 rgb(25, 132, 52);;
+        box-shadow: 0 1.5em 2em 0.875em rgba(10, 10, 10, .1), 0 0 0 2px rgba(10, 10, 10, .02);
         transition: all .3s ease;
+        position: relative;
     }
+
+    .choice {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        text-align: center;
+        font-size: 20px;
+        width: 50px;
+        padding: 10px;
+        background-color: rgb(254, 223, 144);
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+    }
+
+    .choice-detail {
+        margin-left: 50px;
+    }
+
     .choice_block:hover {
         box-shadow: none;
     }
+
     .choice_block.selected {
-        background-color:  wheat;
+        background-color: rgb(254, 223, 144);
     }
+
     .choice_block.success {
-        color: #fff;
-        background-color:  rgb(25, 132, 52);
+        color: #000;
+        background-color: rgb(25, 132, 52);
+        opacity: 0.8;
     }
+
     .choice_block.failed {
-        color: #fff;
-        background-color:  red;
+        color: #000;
+        background-color: red;
+        opacity: 0.8;
+    }
+
+    .choice_block.selected .choice,
+    .choice_block.success .choice,
+    .choice_block.failed .choice {
+        border-right: 1px solid rgb(25, 132, 52);
     }
 
     #confirmbtn {
         font-size: 20px;
         font-weight: bolder;
+        color: #000;
     }
 
     #confirmbtn:hover {
@@ -73,16 +105,32 @@
         <span><small class="mr-2">难度:</small><strong>{[sc.star]}颗星</strong></span>
     </p>
     <div class="block title_block">{[sc.title]}</div>
-    <div class="block choice_block" @click="selectOne('a')"><span>A&nbsp;|&nbsp;</span> {[sc.choice_a]}</div>
-    <div class="block choice_block" @click="selectOne('b')"><span>B&nbsp;|&nbsp;</span> {[sc.choice_b]}</div>
-    <div class="block choice_block" @click="selectOne('c')"><span>C&nbsp;|&nbsp;</span> {[sc.choice_c]}</div>
-    <div class="block choice_block" @click="selectOne('d')"><span>D&nbsp;|&nbsp;</span> {[sc.choice_d]}</div>
-    <div class="buttons is-centered">
+    <div class="block choice_block" @click="selectOne" choice="a">
+        <div class="choice">A</div>
+        <span class="choice-detail">{[sc.choice_a]}</span>
+    </div>
+    <div class="block choice_block" @click="selectOne" choice="b">
+        <div class="choice">B</div>
+        <span class="choice-detail">{[sc.choice_b]}</span>
+    </div>
+    <div class="block choice_block" @click="selectOne" choice="c">
+        <div class="choice">C</div>
+        <span class="choice-detail">{[sc.choice_c]}</span>
+    </div>
+    <div class="block choice_block" @click="selectOne" choice="d">
+        <div class="choice">D</div>
+        <span class="choice-detail">{[sc.choice_d]}</span>
+    </div>
+
+    <div class="buttons is-centered mt-6">
         <button class="button is-rounded is-success is-outlined" id="confirmbtn" @click="postQuestion">确认&解析</button>
     </div>
     <div class="block">
-        <p v-if="answer" class="answer">答案: <strong>{[answer]}</strong></p>
+        <p v-if="right_choice" class="answer">答案: <strong>{[right_choice]}</strong></p>
         <p v-if="description" class="description">解析: <strong>{[description]}</strong></p>
+        <p v-if="next" class="description">
+            <button class="button is-warning" @click="getOneQuestion">下一题</button>
+        </p>
     </div>
 </div>
 
@@ -118,10 +166,10 @@
                 sc: {
                     tags: []
                 },
-                selected_choice: '',
                 selected_block: null,
-                answer: '',
+                right_choice: '',
                 description: '',
+                next: false,
 
             }
         },
@@ -136,28 +184,42 @@
         },
         methods: {
             getOneQuestion: function () {
+                this.resetInfo()
                 fetch("{% url 'scstart' %}").then((res) => res.json()).then((data) => {
                     this.sc = data
                 })
             },
             postQuestion: function () {
+                if (!this.selected_block) {
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "info",
+                        title: "请先选择一个选项！",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                    });
+                    return;
+                }
+                if (this.right_choice) {
+                    return;
+                }
                 fetch("{% url 'scstart' %}", {
                     method: 'POST',
                     headers: {
                         Accept: 'application.json',
                         'Content-Type': 'application/json',
                         'X-CSRFToken': csrftoken,
-                        'todo-sc-no': '101-123',
-                        'right-choice': 'b'
+                        'todo-sc-no': this.sc.no,
+                        'select-choice': this.selected_block.getAttribute('choice'),
                     }
                 }).then((res) => res.json()).then((data) => {
-                    this.answer = data.rc;
+                    this.right_choice = data.right_choice;
                     this.description = data.desc;
+                    this.next = true;
                     this.selected_block.classList.remove('selected');
-                    console.log('111')
-                    console.log(data.status === true)
-                    console.log(data.status)
-                    console.log(data)
+
                     if (data.status === true) {
                         this.selected_block.classList.add('success');
                     } else {
@@ -165,15 +227,37 @@
                     }
                 })
             },
-            selectOne: function(e, value) {
-                console.log('1', value)
+            selectOne: function (e) {
+                // 获取外层的choice_block
+                let block = e.target
+                if (!block.classList.contains('choice_block')) {
+                    block = block.parentNode
+                }
+                // 二次点击取消选中状态
+                if (block.classList.contains('selected')) {
+                    block.classList.remove('selected')
+                    return
+                }
+                // 点击并选中其他block
                 choises = document.getElementsByClassName('choice_block')
                 for (let index = 0; index < choises.length; index++) {
                     choises[index].classList.remove('selected')
                 }
-                e.target.classList.add('selected')
-                this.selected_block = e.target;
-                this.selected_choice = ''
+                block.classList.add('selected')
+                this.selected_block = block;
+            },
+            resetInfo: function () {
+                this.sc = { tags: [] }
+                this.selected_block = null
+                this.right_choice = ''
+                this.description = ''
+                this.next = false
+                choises = document.getElementsByClassName('choice_block')
+                for (let index = 0; index < choises.length; index++) {
+                    choises[index].classList.remove('selected')
+                    choises[index].classList.remove('success')
+                    choises[index].classList.remove('failed')
+                }
             },
         },
         mounted() {

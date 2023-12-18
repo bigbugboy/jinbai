@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'apps.userinfo',
     'apps.exercise',
+    'apps.console',
 ]
 
 MIDDLEWARE = [

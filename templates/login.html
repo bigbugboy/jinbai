@@ -1,10 +1,23 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block css %}
 <style>
-  #main {
-    height: 100vh;
-    width: 100%;
+  body {
+    height: 100vh !important;
+  }
+  .box {
+    background-color: transparent !important;
+    box-shadow: 0 1.5em 2em 0.875em rgba(10,10,10,.1), 0 0 0 2px rgba(10,10,10,.02);
+  }
+  #info {
+    position: relative;
+  }
+  #info-icon {
+    width: 20px;
+    position: relative;
+    top: 3px;
+
   }
   #sendcodebtn {
     color: rgb(25, 132, 52) !important;
@@ -18,13 +31,17 @@
 
 
 {% block content %}
-<div class="columns is-align-items-center is-justify-content-center" id="main">
+{% include 'partials/sweetalert.html' %}
+<div class="columns is-align-items-center is-justify-content-center mt-6">
   <div class="column box is-one-third is-two-fifth-widescreen is-one-fifth-fullhd">
     <h1 class="title has-text-centered py-6"><a href="{% url 'index' %}">xiaofeiniu.top</a></h1>
-    <p class="has-text-centered mt-4">验证即登录，未注册将自动创建账号</p>
+    <p class="has-text-centered" id="info">
+      <img id="info-icon" src="{% static 'img/help-circle.svg' %}" alt="">
+      <span>验证即登录，未注册将自动创建账号</span>
+      </p>
     <form action="{% url 'login' %}" method="post">
       {% csrf_token %}
-      <div class="field my-6">
+      <div class="field my-4">
         <div class="field has-addons">
           <p class="control">
             <a class="button is-static">
@@ -36,9 +53,9 @@
           </p>
         </div>
       </div>
-      <div class="field has-addons my-6">
+      <div class="field has-addons my-4">
         <div class="control is-expanded">
-          <input class="input" type="text" name="code" placeholder="验证码">
+          <input class="input" type="text" name="code" autocomplete="off" placeholder="验证码">
         </div>
         <p class="control">
           <a class="button" id="sendcodebtn">

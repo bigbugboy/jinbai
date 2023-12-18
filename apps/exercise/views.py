@@ -8,13 +8,14 @@ from django.utils.decorators import method_decorator
 from . import models
 
 
+@login_required(login_url='login')
 def index(request):
     return render(request, 'exercise.html')
 
 
 
-@method_decorator(login_required, name='get')
-@method_decorator(login_required, name='post')
+@method_decorator(login_required(login_url='login'), name='get')
+@method_decorator(login_required(login_url='login'), name='post')
 class ScStart(View):
 
     def _json_to(self, sc: models.SingleChoice):
@@ -27,7 +28,7 @@ class ScStart(View):
             'choice_b': sc.choice_b,
             'choice_c': sc.choice_c,
             'choice_d': sc.choice_d,
-            'right_counts': sc.right_choice,
+            'right_counts': sc.right_counts,
             'wrong_counts': sc.wrong_counts,
             'collect_counts': sc.collect_counts,
         }
@@ -38,8 +39,6 @@ class ScStart(View):
         todo_sc_no = request.session.get('todo_sc_no')
         if todo_sc_no:
             sc = get_object_or_404(models.SingleChoice, no=todo_sc_no)
-            print(111)
-            print()
             return JsonResponse(self._json_to(sc))
         
         # 新的题目
@@ -54,13 +53,12 @@ class ScStart(View):
 
     def post(self, request: HttpRequest):
         todo_sc_no = request.headers['todo-sc-no']
-        right_choice = request.headers['right-choice']
+        select_choice = request.headers['select-choice']
         sc = get_object_or_404(models.SingleChoice, no=todo_sc_no)
-        print(sc.right_choice)
-        print(right_choice)
+        request.session['todo_sc_no'] = ''  # 这样操作后，下一题就会再随机一个新题
         return JsonResponse({
-            'status': right_choice == sc.right_choice,
-            'rc': sc.right_choice,
+            'status': select_choice == sc.right_choice,
+            'right_choice': sc.right_choice,
             'desc': sc.description,
         })
 
