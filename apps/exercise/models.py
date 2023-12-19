@@ -1,4 +1,5 @@
 from django.db import models
+from ckeditor.fields import RichTextField
 
 
 class Tag(models.Model):
@@ -28,13 +29,13 @@ class SingleChoice(models.Model):
     tags = models.ManyToManyField(to=Tag)
     star = models.SmallIntegerField(default=1, choices=((i + 1, f'{i+1}颗星')for i in range(3)), help_text='难度系数')
     no = models.CharField(max_length=255, blank=False, null=False, help_text='格式: <标签编号>-<题目唯一编号>')
-    title = models.TextField(blank=False, null=False)
+    title = RichTextField(blank=False, null=False)
     choice_a = models.CharField(max_length=255, null=False)
     choice_b = models.CharField(max_length=255, null=False)
     choice_c = models.CharField(max_length=255, null=False)
     choice_d = models.CharField(max_length=255, null=False)
     right_choice = models.CharField(max_length=1, choices=((c, str(c).upper()) for c in 'abcd'), blank=False, null=False)
-    description = models.TextField(default='')
+    description = RichTextField(default='')
     status = models.SmallIntegerField(default=1, choices=status_choices, help_text='题目的状态')
     created_at = models.DateTimeField(auto_now_add=True, help_text='创建时间')
     updated_at = models.DateTimeField(auto_now=True, help_text='更新时间')

@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block css %}
+
 <style>
     [v-cloak] {
         display: none;
@@ -97,6 +98,12 @@
         margin: 10px;
     }
 </style>
+<script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
+<!-- todo: prism -->
+<!--参考: https://www.jianshu.com/p/46308e046054 -->
+<!-- <link rel="stylesheet" href="{% static 'prism/prism.css' %}"> -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css" rel="stylesheet" />
+
 {% endblock %}
 
 
@@ -108,7 +115,7 @@
         <span class="mr-5"><small class="mr-2">标签:</small><strong>{[ scTags ]}</strong></span>
         <span><small class="mr-2">难度:</small><strong>{[sc.star]}颗星</strong></span>
     </p>
-    <div class="block title_block">{[sc.title]}</div>
+    <div class="block title_block" v-html="sc.title"></div>
     <div class="block choice_block" @click="selectOne" choice="a">
         <div class="choice">A</div>
         <span class="choice-detail">{[sc.choice_a]}</span>
