@@ -13,7 +13,6 @@ def index(request):
     return render(request, 'exercise.html')
 
 
-
 @method_decorator(login_required(login_url='login'), name='get')
 @method_decorator(login_required(login_url='login'), name='post')
 class ScStart(View):

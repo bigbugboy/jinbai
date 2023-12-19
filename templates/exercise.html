@@ -26,6 +26,13 @@
         padding-left: 0px;
         margin-top: 20px;
     }
+    /* 修复bulma导致co代码块高亮冲突 */
+    .token.number {
+        background-color: transparent !important;
+        border-radius: 0px !important;
+        display:inline  !important;
+        padding: 0px !important;
+    }
 
     .choice_block {
         font-size: 20px;
@@ -98,11 +105,7 @@
         margin: 10px;
     }
 </style>
-<script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
-<!-- todo: prism -->
-<!--参考: https://www.jianshu.com/p/46308e046054 -->
-<!-- <link rel="stylesheet" href="{% static 'prism/prism.css' %}"> -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="{% static 'prism/prism.css' %}">
 
 {% endblock %}
 
@@ -150,6 +153,7 @@
 
 {% block js %}
 <script src="{% static 'js/common.js' %}"></script>
+<script src="{% static 'prism/prism.js' %}"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.js"></script>
 <script>
     var app = new Vue({
@@ -180,7 +184,7 @@
             getOneQuestion: function () {
                 this.resetInfo()
                 fetch("{% url 'scstart' %}").then((res) => res.json()).then((data) => {
-                    this.sc = data
+                    this.sc = data;
                 })
             },
             postQuestion: function () {
@@ -250,6 +254,10 @@
             this.getOneQuestion()
             // Vue实例渲染完成后执行的逻辑
             document.getElementById('app').style.display = 'block';
+        },
+        updated(){
+            //保证v-html渲染的代码块高亮显示
+            Prism.highlightAll();
         },
     })
 </script>
