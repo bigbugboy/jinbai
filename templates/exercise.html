@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block css %}
 <style>
@@ -138,25 +138,9 @@
 
 
 {% block js %}
+<script src="{% static 'js/common.js' %}"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.js"></script>
 <script>
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    const csrftoken = getCookie('csrftoken');
-
     var app = new Vue({
         el: '#app',
         delimiters: ["{[", "]}"],
@@ -190,15 +174,7 @@
             },
             postQuestion: function () {
                 if (!this.selected_block) {
-                    Swal.fire({
-                        toast: true,
-                        position: "top-end",
-                        icon: "info",
-                        title: "请先选择一个选项！",
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                    });
+                    sweetAlert('info', '请先选择一个选项！')
                     return;
                 }
                 if (this.right_choice) {
@@ -209,7 +185,7 @@
                     headers: {
                         Accept: 'application.json',
                         'Content-Type': 'application/json',
-                        'X-CSRFToken': csrftoken,
+                        'X-CSRFToken': getCookie('csrftoken'),
                         'todo-sc-no': this.sc.no,
                         'select-choice': this.selected_block.getAttribute('choice'),
                     }

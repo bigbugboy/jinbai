@@ -1,10 +1,17 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.views import View
+from django.core.cache import cache
+from django.conf import settings
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpRequest
+from django.views.decorators.http import require_POST
+from  . import models, forms, utils
 
-from  . import models
+
+def logut(request):
+    auth.logout(request)
+    return redirect('index')
 
 
 class LoginView(View):
@@ -18,32 +25,33 @@ class LoginView(View):
     def post(self, request):
         telephone = request.POST.get('telephone')
         verify_code = request.POST.get('code')
-        if not telephone or not verify_code:
-            messages.error(request, '手机号或验证码不能为空')
-            return render(request, 'login.html')
-        # todo: validate verify code and telephone
-        # todo: send verify code by cloud api
-        user, is_created  = models.User.objects.get_or_create(
-            telephone=telephone, 
-            defaults={'telephone': telephone, 'username': str(telephone)}
-        )
-        auth.login(request, user)
-        messages.success(request, f'欢迎:{user.telephone}')
-        return redirect(to='index')
+        form_obj = forms.LoginForm({'telephone': telephone, 'verify_code': verify_code})
+        if form_obj.is_valid():
+            user, is_created  = models.User.objects.get_or_create(
+                telephone=telephone, 
+                defaults={'telephone': telephone, 'username': str(telephone)}
+            )
+            auth.login(request, user)
+            messages.success(request, f'欢迎:{user.telephone}')
+            return redirect(to='index')
+        
+        # validate failed
+        messages.error(request, '手机号或验证码错误')
+        return render(request, 'login.html')
 
 
-def logut(request):
-    auth.logout(request)
-    return redirect('index')
-
-
-class SendVerifyCode(View):
-    def post(self, request):
-        telephone = request.POST.get('telephone')
-        return JsonResponse({'code': 0, 'msg': 'OK'})
-
-
-class ValidatePhone(View):
-    def post(self, request):
-        telephone = request.POST.get('telephone')
-        return JsonResponse({'code': 0, 'msg': 'OK'})
+@require_POST
+def send_verify_code(request: HttpRequest):
+    telephone = request.headers.get('telephone')
+    if not utils.validate_telephone(telephone):
+        return JsonResponse({'status': 'error', 'msg': '手机号错误'})
+    
+    key = settings.TELEPHONE_VERIFY_CODE_KEY % telephone
+    if cache.get(key):
+        return JsonResponse({'status': 'error', 'msg': '1分钟以后再发送验证码'})
+    
+    code = utils.generate_verify_code()
+    cache.set(key, code, timeout=settings.TELEPHONE_VERIFY_CODE_TIMEOUT)
+    # todo send code call cloud api
+    print('verify code:', code)
+    return JsonResponse({'status': 'success', 'msg': 'ok'})

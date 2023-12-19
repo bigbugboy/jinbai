@@ -130,3 +130,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 AUTH_USER_MODEL = 'userinfo.User'
+
+
+# 手机登录验证码相关
+TELEPHONE_VERIFY_CODE_KEY = 'telephone_verify_code_%s'
+TELEPHONE_VERIFY_CODE_TIMEOUT = 60  # 60s

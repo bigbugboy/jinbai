@@ -68,13 +68,13 @@
                 </a>
               </p>
               <p class="control is-expanded">
-                <input class="input" type="tel" name="telephone" placeholder="手机号">
+                <input class="input" type="tel" name="telephone" id="telephone" placeholder="手机号">
               </p>
             </div>
           </div>
           <div class="field has-addons">
             <div class="control is-expanded">
-              <input class="input" type="text" name="code" autocomplete="off" placeholder="验证码">
+              <input class="input" type="text" name="code" id="code" autocomplete="off" placeholder="验证码">
             </div>
             <p class="control">
               <a class="button" id="sendcodebtn">
@@ -92,6 +92,8 @@
     </div>
   </div>
 
+<script src="{% static 'js/common.js' %}"></script>
+<script src="{% static 'js/login.js' %}"></script>
 </body>
 
 </html>
