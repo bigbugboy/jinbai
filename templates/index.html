@@ -6,6 +6,7 @@
   .box {
     background-color: transparent !important;
     color: rgb(25, 132, 52) !important;
+    box-shadow: 0 1.5em 2em 0.875em rgba(10, 10, 10, .1), 0 0 0 2px rgba(10, 10, 10, .02);
   }
 
   #sc-info {
@@ -20,14 +21,14 @@
 {% include 'partials/header.html' %}
 {% include 'partials/sweetalert.html' %}
 <section class="section">
-  <div class="columns mt-6">
-    <div class="column is-one-third has-text-left">
+  <div class="columns mt-6 is-justify-content-center">
+    <div class="column is-12-mobile is-5-tablet is-5-desktop is-6-widescreen is-6-fullhd has-text-left has-text-centered-mobile">
       <h1 class="title my-6">让理论更结实</h1>
       <p class="my-3 is-size-5">优雅胜于丑陋，简单胜于复杂</p>
-      <p class="my-3 is-size-5">面对不确定性，拒绝妄加猜测</p>
       <p class="my-3 is-size-5">简单优于复杂，复杂优于凌乱</p>
       <p class="my-3 is-size-5">扁平优于嵌套，稀疏优于稠密</p>
-      <p class="my-6 is-size-6">— Python之禅</p>
+      <p class="my-3 is-size-5">面对不确定性，拒绝妄加猜测</p>
+      <p class="mt-4 mb-6 is-size-6">— Python之禅</p>
       <a href="{% url 'exercise' %}" class="button is-success is-outlined is-rounded has-text-centered">开始吧</a>
     </div>
     <div class="column">
@@ -52,16 +53,16 @@
 <section id="vip">
   <div class="has-text-centered py-6">
     <h1 class="title">暂未开通</h1>
-    <p>你喜欢的方式这里都有你喜欢的方式这里都有你喜欢的方式这里都有你喜欢的方式这里都有</p>
+    <p>敬请期待</p>
   </div>
   <!-- 2种会费方式 -->
-  <div class="columns p-6">
-    <div class="column has-text-centered">
+  <div class="columns is-justify-content-center">
+    <div class="column has-text-centered is-12-mobile is-4-tablet m-6">
       <h1 class="title">&yen;7</h1>
       <h3 class="subtitle">7天</h3>
       <button class="button is-info is-outlined is-rounded">Get started</button>
     </div>
-    <div class="column has-text-centered">
+    <div class="column has-text-centered is-12-mobile is-4-tablet m-6">
       <h1 class="title">&yen;10</h1>
       <h3 class="subtitle">30天</h3>
       <button class="button is-info is-outlined is-rounded">Get started</button>
