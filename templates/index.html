@@ -3,14 +3,15 @@
 
 {% block css %}
 <style>
-.box {
+  .box {
     background-color: transparent !important;
     color: rgb(25, 132, 52) !important;
-}
-#sc-info {
+  }
+
+  #sc-info {
     padding-bottom: 4px;
     border-bottom: 3px solid rgb(25, 132, 52);
-}
+  }
 </style>
 {% endblock %}
 
@@ -18,56 +19,54 @@
 {% block content %}
 {% include 'partials/header.html' %}
 {% include 'partials/sweetalert.html' %}
-<main>
-    <section class="section">
-        <div class="columns mt-6">
-          <div class="column is-one-third has-text-left">
-            <h1 class="title my-6">让理论更结实</h1>
-            <p class="my-3 is-size-5">优雅胜于丑陋，简单胜于复杂</p>
-            <p class="my-3 is-size-5">面对不确定性，拒绝妄加猜测</p>
-            <p class="my-3 is-size-5">简单优于复杂，复杂优于凌乱</p>
-            <p class="my-3 is-size-5">扁平优于嵌套，稀疏优于稠密</p>
-            <p class="my-6 is-size-6">— Python之禅</p>
-            <a href="{% url 'exercise' %}" class="button is-success is-outlined is-rounded has-text-centered">开始吧</a>
-          </div>
-          <div class="column">
-            <div class="box">
-              <p class="block" id="sc-info">
-                <span class="mr-6"><small class="mr-2">题号:</small>123456</span>
-                <span><small class="mr-2">标签:</small>字符串</span>
-              </p>
-              <h1 class="is-size-5">关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是：</h1>
-              <p>1 def test():</p>
-              <p>2     print(a)</p>
-              <p>     a = 100</p>
-              <p>4</p>
-              <p>5 test()</p>  
-            </div>
-              
-          </div>
-        </div>
-    </section>
+<section class="section">
+  <div class="columns mt-6">
+    <div class="column is-one-third has-text-left">
+      <h1 class="title my-6">让理论更结实</h1>
+      <p class="my-3 is-size-5">优雅胜于丑陋，简单胜于复杂</p>
+      <p class="my-3 is-size-5">面对不确定性，拒绝妄加猜测</p>
+      <p class="my-3 is-size-5">简单优于复杂，复杂优于凌乱</p>
+      <p class="my-3 is-size-5">扁平优于嵌套，稀疏优于稠密</p>
+      <p class="my-6 is-size-6">— Python之禅</p>
+      <a href="{% url 'exercise' %}" class="button is-success is-outlined is-rounded has-text-centered">开始吧</a>
+    </div>
+    <div class="column">
+      <div class="box">
+        <p class="block" id="sc-info">
+          <span class="mr-6"><small class="mr-2">题号:</small>123456</span>
+          <span><small class="mr-2">标签:</small>字符串</span>
+        </p>
+        <h1 class="is-size-5">关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是：</h1>
+        <p>1 def test():</p>
+        <p>2 print(a)</p>
+        <p> a = 100</p>
+        <p>4</p>
+        <p>5 test()</p>
+      </div>
 
-    <!-- 会费价格 -->
-    <section id="vip">
-        <div class="has-text-centered py-6">
-            <h1 class="title">暂未开通</h1>
-            <p>你喜欢的方式这里都有你喜欢的方式这里都有你喜欢的方式这里都有你喜欢的方式这里都有</p>
-        </div>
-        <!-- 2种会费方式 -->
-        <div class="columns p-6">
-            <div class="column has-text-centered">
-                <h1 class="title">&yen;7</h1>
-                <h3 class="subtitle">7天</h3>
-                <button class="button is-info is-outlined is-rounded">Get started</button>
-            </div>
-            <div class="column has-text-centered">
-                <h1 class="title">&yen;10</h1>
-                <h3 class="subtitle">30天</h3>
-                <button class="button is-info is-outlined is-rounded">Get started</button>
-            </div>
-        </div>
-    </section>
-</main>
+    </div>
+  </div>
+</section>
+
+<!-- 会费价格 -->
+<section id="vip">
+  <div class="has-text-centered py-6">
+    <h1 class="title">暂未开通</h1>
+    <p>你喜欢的方式这里都有你喜欢的方式这里都有你喜欢的方式这里都有你喜欢的方式这里都有</p>
+  </div>
+  <!-- 2种会费方式 -->
+  <div class="columns p-6">
+    <div class="column has-text-centered">
+      <h1 class="title">&yen;7</h1>
+      <h3 class="subtitle">7天</h3>
+      <button class="button is-info is-outlined is-rounded">Get started</button>
+    </div>
+    <div class="column has-text-centered">
+      <h1 class="title">&yen;10</h1>
+      <h3 class="subtitle">30天</h3>
+      <button class="button is-info is-outlined is-rounded">Get started</button>
+    </div>
+  </div>
+</section>
 
 {% endblock %}

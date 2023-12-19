@@ -1,6 +1,7 @@
 <style>
     .navbar {
         background-color: transparent !important;
+        padding: 10px !important;
     }
 
     .title {
@@ -52,22 +53,22 @@
                 </a>
 
                 <div class="navbar-dropdown">
-                    <a class="navbar-item">
+                    <a class="navbar-item is-flex">
                         <img src="{% static 'img/star.svg' %}" class="icon">
-                        我的题目
+                        <span>我的题目</span>
                     </a>
-                    <a class="navbar-item">
+                    <a class="navbar-item is-flex">
                         <img src="{% static 'img/coffee.svg' %}" class="icon">
-                        升级VIP账号
+                        <span>升级VIP账号</span>
                     </a>
-                    <a class="navbar-item" href="{% url 'icenter' %}">
+                    <a class="navbar-item is-flex" href="{% url 'icenter' %}">
                         <img src="{% static 'img/grid.svg' %}" class="icon">
-                        个人中心
+                        <span>个人中心</span>
                     </a>
                     <hr class="navbar-divider">
-                    <a class="navbar-item" href="{% url 'logut' %}">
+                    <a class="navbar-item is-flex" href="{% url 'logut' %}">
                         <img src="{% static 'img/log-out.svg' %}" class="icon">
-                        退出
+                        <span>退出</span>
                     </a>
                 </div>
                 {% else %}

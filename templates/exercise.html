@@ -125,7 +125,7 @@
     <div class="buttons is-centered mt-6">
         <button class="button is-rounded is-success is-outlined" id="confirmbtn" @click="postQuestion">确认&解析</button>
     </div>
-    <div class="block">
+    <div v-if="right_choice" class="block">
         <p v-if="right_choice" class="answer">答案: <strong>{[right_choice]}</strong></p>
         <p v-if="description" class="description">解析: <strong>{[description]}</strong></p>
         <p v-if="next" class="description">
@@ -133,7 +133,6 @@
         </p>
     </div>
 </div>
-
 
 {%endblock%}
 

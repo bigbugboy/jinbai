@@ -1,79 +1,97 @@
-{% extends 'base.html' %}
-{% load static %}
+<!DOCTYPE html>
+<html>
 
-{% block css %}
-<style>
-  #login {
-    height: 100vh;
-    margin-top: 150px;
-  }
-  .box {
-    background-color: transparent !important;
-    box-shadow: 0 1.5em 2em 0.875em rgba(10,10,10,.1), 0 0 0 2px rgba(10,10,10,.02);
-  }
-  #info {
-    position: relative;
-  }
-  #info-icon {
-    width: 20px;
-    position: relative;
-    top: 3px;
+<head>
+  {% load static %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Hello{% endblock %}</title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+  <link href="https://cdn.bootcdn.net/ajax/libs/bulma/0.9.4/css/bulma.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcdn.net/ajax/libs/sweetalert2/11.7.27/sweetalert2.all.js"></script>
+  <style>
+    body {
+      height: 100vh;
+      background-image: url('{% static "img/bg.png" %}');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+    }
+    #login {
+      height: 100%;
+    }
+    .box {
+      background-color: transparent !important;
+      box-shadow: 0 1.5em 2em 0.875em rgba(10, 10, 10, .1), 0 0 0 2px rgba(10, 10, 10, .02);
+    }
 
-  }
-  #sendcodebtn {
-    color: rgb(25, 132, 52) !important;
-  }
-  #loginbtn:hover{
-    color: #fff;
-    background-color: rgb(25, 132, 52) !important;
-  }
-</style>
-{% endblock %}
+    #info {
+      position: relative;
+    }
 
+    #info-icon {
+      width: 18px;
+      position: relative;
+      top: 3px;
 
-{% block content %}
-{% include 'partials/sweetalert.html' %}
-<div class="columns is-align-content-center is-justify-content-center" id="login">
-  <div class="column is-12-mobile is-6-tablet is-6-desktop is-4-widescreen is-4-fullhd">
-    <div class="box">
-    <h1 class="title has-text-centered py-6"><a href="{% url 'index' %}">xiaofeiniu.top</a></h1>
-    <p class="has-text-centered" id="info">
-      <img id="info-icon" src="{% static 'img/help-circle.svg' %}" alt="">
-      <span>验证即登录，未注册将自动创建账号</span>
-      </p>
-    <form action="{% url 'login' %}" method="post">
-      {% csrf_token %}
-      <div class="field mb-4">
-        <div class="field has-addons">
-          <p class="control">
-            <a class="button is-static">
-              +86
-            </a>
-          </p>
-          <p class="control is-expanded">
-            <input class="input" type="tel" name="telephone" placeholder="手机号">
-          </p>
-        </div>
-      </div>
-      <div class="field has-addons">
-        <div class="control is-expanded">
-          <input class="input" type="text" name="code" autocomplete="off" placeholder="验证码">
-        </div>
-        <p class="control">
-          <a class="button" id="sendcodebtn">
-            发送验证码
-          </a>
+    }
+
+    #sendcodebtn {
+      color: rgb(25, 132, 52) !important;
+    }
+
+    #loginbtn:hover {
+      color: #fff;
+      background-color: rgb(25, 132, 52) !important;
+    }
+  </style>
+</head>
+
+<body>
+  {% include 'partials/sweetalert.html' %}
+
+  <div class="columns is-flex-wrap-wrap is-align-content-center is-justify-content-center is-mobile" id="login">
+    <div class="column is-10-mobile is-5-tablet is-4-desktop is-3-widescreen is-3-fullhd">
+      <div class="box">
+        <h1 class="title has-text-centered py-6"><a href="{% url 'index' %}">xiaofeiniu.top</a></h1>
+        <p class="has-text-centered mb-4" id="info">
+          <img id="info-icon" src="{% static 'img/help-circle.svg' %}" alt="">
+          <span>验证即登录，未注册将自动创建账号</span>
         </p>
+        <form action="{% url 'login' %}" method="post">
+          {% csrf_token %}
+          <div class="field mb-4">
+            <div class="field has-addons">
+              <p class="control">
+                <a class="button is-static">
+                  +86
+                </a>
+              </p>
+              <p class="control is-expanded">
+                <input class="input" type="tel" name="telephone" placeholder="手机号">
+              </p>
+            </div>
+          </div>
+          <div class="field has-addons">
+            <div class="control is-expanded">
+              <input class="input" type="text" name="code" autocomplete="off" placeholder="验证码">
+            </div>
+            <p class="control">
+              <a class="button" id="sendcodebtn">
+                发送验证码
+              </a>
+            </p>
+          </div>
+          <div class="field is-grouped is-grouped-centered">
+            <div class="control">
+              <button class="button is-rounded" id="loginbtn">登录</button>
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="field is-grouped is-grouped-centered">
-        <div class="control">
-          <button class="button is-rounded" id="loginbtn">登录</button>
-        </div>
-      </div>
-    </form>
+    </div>
   </div>
-  </div>
-</div>
 
+</body>
 
-{% endblock %}
+</html>
