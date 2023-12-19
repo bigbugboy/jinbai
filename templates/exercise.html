@@ -3,6 +3,10 @@
 
 {% block css %}
 <style>
+    [v-cloak] {
+        display: none;
+    }
+
     .box {
         background-color: transparent !important;
         color: rgb(25, 132, 52) !important;
@@ -98,7 +102,7 @@
 
 {% block content %}
 {% include 'partials/header.html' %}
-<div class="box mt-6" id="app">
+<div class="box mt-6" id="app" v-cloak>
     <p id="sc-info">
         <span class="mr-5"><small class="mr-2">题号:</small><strong>{[ sc.no ]}</strong></span>
         <span class="mr-5"><small class="mr-2">标签:</small><strong>{[ scTags ]}</strong></span>
@@ -237,6 +241,8 @@
         },
         mounted() {
             this.getOneQuestion()
+            // Vue实例渲染完成后执行的逻辑
+            document.getElementById('app').style.display = 'block';
         },
     })
 </script>
