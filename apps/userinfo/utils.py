@@ -1,5 +1,8 @@
 import re
 import random
+from threading import Thread
+
+from .aliyun_sample import aliyun_sample
 
 
 def validate_telephone(phone):
@@ -24,3 +27,7 @@ def generate_verify_code():
     return ''.join(codes)
 
 
+
+def send_verify_code(telephone):
+    t = Thread(target=aliyun_sample.send_sms, args=[telephone])
+    t.start()

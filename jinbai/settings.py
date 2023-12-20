@@ -13,13 +13,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-ENV = os.getenv('ENV')
-DOMAIN = os.getenv('DOMAIN')
+ENV = os.environ['ENV']
+DOMAIN = os.environ['DOMAIN']
 
-DEBUG = False if ENV == 'prod' else True
+DEBUG = False if ENV == 'PROD' else True
 ALLOWED_HOSTS = ['*'] if DEBUG else [DOMAIN]
 
 
@@ -132,6 +132,9 @@ AUTH_USER_MODEL = 'userinfo.User'
 TELEPHONE_VERIFY_CODE_KEY = 'telephone_verify_code_%s'
 TELEPHONE_VERIFY_CODE_TIMEOUT = 60  # 60s
 
+ALIYUN_ACCESSKEY_ID = os.environ['ALIYUN_ACCESSKEY_ID']
+ALIYUN_ACCESSKEY_SECERT = os.environ['ALIYUN_ACCESSKEY_SECERT']
+ALIYUN_SAMPLE_SIGNNAME = os.environ['ALIYUN_SAMPLE_SIGNNAME']
 
 #  django-ckeditor
 CKEDITOR_CONFIGS = {
