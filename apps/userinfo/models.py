@@ -17,7 +17,7 @@ class User(AbstractUser):
     vip_start_date = models.DateTimeField(blank=True, null=True)
     vip_end_date = models.DateTimeField(blank=True, null=True)
 
-    today_sc_nos = models.CharField(max_length=1000, default='', help_text='今日答题no')
+    today_sc_nos = models.CharField(max_length=1000, default='', blank=True, help_text='今日答题no')
     sc_nos = models.TextField(blank=True, null=True, help_text='用户管收藏的单选题目no')
 
 

@@ -5,7 +5,10 @@ from . import models
 
 
 class SingleChoiceAdmin(admin.ModelAdmin):
-    list_display = ['pk', 'star', 'status', 'title']
+    list_display = ['pk', 'no', 'star', 'status']
+    search_fields = ['pk', 'no', 'status', 'star']
+    search_help_text = '支持搜索的字段: pk/no/star/status'
+    
 
 
 

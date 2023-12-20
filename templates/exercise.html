@@ -26,12 +26,16 @@
         padding-left: 0px;
         margin-top: 20px;
     }
+
     /* 修复bulma导致co代码块高亮冲突 */
     .token.number {
         background-color: transparent !important;
         border-radius: 0px !important;
-        display:inline  !important;
+        display: inline !important;
         padding: 0px !important;
+    }
+    code[class*=language-], pre[class*=language-] {
+        font-size: 16px !important;
     }
 
     .choice_block {
@@ -49,13 +53,16 @@
         position: absolute;
         top: 0px;
         left: 0px;
-        text-align: center;
-        font-size: 20px;
         width: 50px;
+        height: 100%;
         padding: 10px;
         background-color: rgb(254, 223, 144);
         border-bottom-left-radius: 10px;
         border-top-left-radius: 10px;
+        display: grid;
+        place-items: center;
+        /* 水平和垂直居中 */
+        font-size: 20px;
     }
 
     .choice-detail {
@@ -114,34 +121,23 @@
 {% include 'partials/header.html' %}
 <div class="box mt-6" id="app" v-cloak>
     <p id="sc-info">
-        <span class="mr-5"><small class="mr-2">题号:</small><strong>{[ sc.no ]}</strong></span>
-        <span class="mr-5"><small class="mr-2">标签:</small><strong>{[ scTags ]}</strong></span>
+        <span class="mr-5"><small class="mr-2">题号:</small><strong v-text="sc.no"></strong></span>
+        <span class="mr-5"><small class="mr-2">标签:</small><strong v-text="scTags"></strong></span>
         <span><small class="mr-2">难度:</small><strong>{[sc.star]}颗星</strong></span>
     </p>
     <div class="block title_block" v-html="sc.title"></div>
-    <div class="block choice_block" @click="selectOne" choice="a">
-        <div class="choice">A</div>
-        <span class="choice-detail">{[sc.choice_a]}</span>
-    </div>
-    <div class="block choice_block" @click="selectOne" choice="b">
-        <div class="choice">B</div>
-        <span class="choice-detail">{[sc.choice_b]}</span>
-    </div>
-    <div class="block choice_block" @click="selectOne" choice="c">
-        <div class="choice">C</div>
-        <span class="choice-detail">{[sc.choice_c]}</span>
-    </div>
-    <div class="block choice_block" @click="selectOne" choice="d">
-        <div class="choice">D</div>
-        <span class="choice-detail">{[sc.choice_d]}</span>
+    <div class="block choice_block" v-for="(item, index) in 'abcd'" @click="selectOne(index)" :key="index"
+        :choice="item" ref="choiceBlocks">
+        <div class="choice" v-text="item.toUpperCase()"></div>
+        <div class="choice-detail" v-html="sc[`choice_${item}`]"></div>
     </div>
 
     <div class="buttons is-centered mt-6">
         <button class="button is-rounded is-success is-outlined" id="confirmbtn" @click="postQuestion">确认&解析</button>
     </div>
     <div v-if="right_choice" class="block">
-        <p v-if="right_choice" class="answer">答案: <strong>{[right_choice]}</strong></p>
-        <p v-if="description" class="description">解析: <strong>{[description]}</strong></p>
+        <div v-if="right_choice" class="answer">答案: <strong v-text="right_choice.toUpperCase()"></strong></div>
+        <div v-if="description" class="description">解析: <small v-html="description"></small></div>
         <p v-if="next" class="description">
             <button class="button is-warning" @click="getOneQuestion">下一题</button>
         </p>
@@ -153,7 +149,7 @@
 
 {% block js %}
 <script src="{% static 'js/common.js' %}"></script>
-<script src="{% static 'prism/prism.js' %}"></script>
+<script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script> 
 <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.js"></script>
 <script>
     var app = new Vue({
@@ -217,9 +213,9 @@
                     }
                 })
             },
-            selectOne: function (e) {
+            selectOne: function (index) {
                 // 获取外层的choice_block
-                let block = e.target
+                const block = this.$refs.choiceBlocks[index];
                 if (!block.classList.contains('choice_block')) {
                     block = block.parentNode
                 }
@@ -255,7 +251,7 @@
             // Vue实例渲染完成后执行的逻辑
             document.getElementById('app').style.display = 'block';
         },
-        updated(){
+        updated() {
             //保证v-html渲染的代码块高亮显示
             Prism.highlightAll();
         },
