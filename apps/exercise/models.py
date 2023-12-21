@@ -26,9 +26,9 @@ class SingleChoice(models.Model):
         (0, '下架'),
     )
 
-    tags = models.ManyToManyField(to=Tag)
+    tag = models.ForeignKey(to=Tag, on_delete=models.SET_NULL, null=True)
     star = models.SmallIntegerField(default=1, choices=((i + 1, f'{i+1}颗星')for i in range(3)), help_text='难度系数')
-    no = models.CharField(max_length=255, blank=False, null=False, help_text='格式: <标签编号>-<题目唯一编号>')
+    no = models.CharField(max_length=10, blank=False, null=False, unique=True, help_text='题目唯一编号')
     title = RichTextField(blank=False, null=False)
     choice_a = RichTextField(max_length=255, null=False)
     choice_b = RichTextField(max_length=255, null=False)
@@ -47,4 +47,3 @@ class SingleChoice(models.Model):
     class Meta:
         verbose_name = '单选题'
         verbose_name_plural = verbose_name
-    

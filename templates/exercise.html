@@ -34,7 +34,9 @@
         display: inline !important;
         padding: 0px !important;
     }
-    code[class*=language-], pre[class*=language-] {
+
+    code[class*=language-],
+    pre[class*=language-] {
         font-size: 16px !important;
     }
 
@@ -119,10 +121,11 @@
 
 {% block content %}
 {% include 'partials/header.html' %}
+{% include 'partials/sweetalert.html' %}
 <div class="box mt-6" id="app" v-cloak>
     <p id="sc-info">
         <span class="mr-5"><small class="mr-2">题号:</small><strong v-text="sc.no"></strong></span>
-        <span class="mr-5"><small class="mr-2">标签:</small><strong v-text="scTags"></strong></span>
+        <span class="mr-5"><small class="mr-2">标签:</small><strong v-text="sc.tag"></strong></span>
         <span><small class="mr-2">难度:</small><strong>{[sc.star]}颗星</strong></span>
     </p>
     <div class="block title_block" v-html="sc.title"></div>
@@ -133,13 +136,18 @@
     </div>
 
     <div class="buttons is-centered mt-6">
-        <button class="button is-rounded is-success is-outlined" id="confirmbtn" @click="postQuestion">确认&解析</button>
+        <button class="button is-rounded is-success is-outlined" :disabled="left_sc_counts < 1" id="confirmbtn"
+            @click="postQuestion">
+            <span v-if="left_sc_counts !== 0">确认&解析</span>
+            <span v-else>今日答题次数已用完</span>
+        </button>
+        <span>{[left_sc_counts]}/{[daily_sc_counts]}</span>
     </div>
     <div v-if="right_choice" class="block">
         <div v-if="right_choice" class="answer">答案: <strong v-text="right_choice.toUpperCase()"></strong></div>
         <div v-if="description" class="description">解析: <small v-html="description"></small></div>
-        <p v-if="next" class="description">
-            <button class="button is-warning" @click="getOneQuestion">下一题</button>
+        <p class="description">
+            <button class="button is-warning" :disabled="left_sc_counts === 1" @click="getOneQuestion">下一题</button>
         </p>
     </div>
 </div>
@@ -149,7 +157,7 @@
 
 {% block js %}
 <script src="{% static 'js/common.js' %}"></script>
-<script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script> 
+<script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.js"></script>
 <script>
     var app = new Vue({
@@ -163,24 +171,26 @@
                 selected_block: null,
                 right_choice: '',
                 description: '',
-                next: false,
-
+                daily_sc_counts: 0,
+                left_sc_counts: 0,
             }
-        },
-        computed: {
-            scTags: function () {
-                let tags = []
-                this.sc.tags.forEach(element => {
-                    tags.push(element.name)
-                });
-                return tags.join(',')
-            },
         },
         methods: {
             getOneQuestion: function () {
-                this.resetInfo()
-                fetch("{% url 'scstart' %}").then((res) => res.json()).then((data) => {
+                fetch("{% url 'scstart' %}").then((res) => {
+                    if (!res.ok) {
+                        alert('今日答题次数已用完')
+                        throw new Error()
+
+                    } else {
+                        return res.json()
+                    }
+                }).then((data) => {
+                    this.resetInfo();
                     this.sc = data;
+                    this.daily_sc_counts = data['daily_sc_counts'];
+                    this.left_sc_counts = data['left_sc_counts'];
+
                 })
             },
             postQuestion: function () {
@@ -203,8 +213,11 @@
                 }).then((res) => res.json()).then((data) => {
                     this.right_choice = data.right_choice;
                     this.description = data.desc;
-                    this.next = true;
                     this.selected_block.classList.remove('selected');
+                    if (this.left_sc_counts === 1) {
+                        this.left_sc_counts = 0
+                        sweetAlert('info', '今日答题次数已用完')
+                    }
 
                     if (data.status === true) {
                         this.selected_block.classList.add('success');
@@ -237,7 +250,6 @@
                 this.selected_block = null
                 this.right_choice = ''
                 this.description = ''
-                this.next = false
                 choises = document.getElementsByClassName('choice_block')
                 for (let index = 0; index < choises.length; index++) {
                     choises[index].classList.remove('selected')
