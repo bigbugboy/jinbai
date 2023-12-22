@@ -2,12 +2,7 @@
 {% load static %}
 
 {% block css %}
-
 <style>
-    [v-cloak] {
-        display: none;
-    }
-
     .box {
         background-color: transparent !important;
         color: rgb(25, 132, 52) !important;
@@ -113,6 +108,9 @@
         line-height: 35px;
         margin: 10px;
     }
+    #answerZone{
+        display: none;
+    }
 </style>
 <link rel="stylesheet" href="{% static 'prism/prism.css' %}">
 
@@ -122,32 +120,37 @@
 {% block content %}
 {% include 'partials/header.html' %}
 {% include 'partials/sweetalert.html' %}
-<div class="box mt-6" id="app" v-cloak>
+<div class="box mt-6">
     <p id="sc-info">
-        <span class="mr-5"><small class="mr-2">题号:</small><strong v-text="sc.no"></strong></span>
-        <span class="mr-5"><small class="mr-2">标签:</small><strong v-text="sc.tag"></strong></span>
-        <span><small class="mr-2">难度:</small><strong>{[sc.star]}颗星</strong></span>
+        <span class="mr-5"><small class="mr-2">题号:</small><strong>{{sc.no}}</strong></span>
+        <span class="mr-5"><small class="mr-2">标签:</small><strong>{{sc.tag}}</strong></span>
+        <span><small class="mr-2">难度:</small><strong>{{sc.star}}颗星</strong></span>
     </p>
-    <div class="block title_block" v-html="sc.title"></div>
-    <div class="block choice_block" v-for="(item, index) in 'abcd'" @click="selectOne(index)" :key="index"
-        :choice="item" ref="choiceBlocks">
-        <div class="choice" v-text="item.toUpperCase()"></div>
-        <div class="choice-detail" v-html="sc[`choice_${item}`]"></div>
+    <div class="block title_block">{{sc.title|safe}}</div>
+    {% for c in 'abcd' %}
+    <div class="block choice_block" choice={{c}} scno={{sc.no}} rsc="{{sc.right_choice}}">
+        <div class="choice">{{c|upper}}</div>
+        {% if c == 'a' %}
+            <div class="choice-detail">{{sc.choice_a|safe}}</div>
+        {% elif c == 'b' %}
+            <div class="choice-detail">{{sc.choice_b|safe}}</div>
+        {% elif c == 'c' %}
+            <div class="choice-detail">{{sc.choice_c|safe}}</div>
+        {% else %}
+            <div class="choice-detail">{{sc.choice_d|safe}}</div>
+        {% endif %}
+    </div>
+    {% endfor %}
+    
+    <div class="buttons is-centered mt-6">
+        <button class="button is-rounded is-success is-outlined" id="confirmbtn">确认&解析</button>
     </div>
 
-    <div class="buttons is-centered mt-6">
-        <button class="button is-rounded is-success is-outlined" :disabled="left_sc_counts < 1" id="confirmbtn"
-            @click="postQuestion">
-            <span v-if="left_sc_counts !== 0">确认&解析</span>
-            <span v-else>今日答题次数已用完</span>
-        </button>
-        <span>{[left_sc_counts]}/{[daily_sc_counts]}</span>
-    </div>
-    <div v-if="right_choice" class="block">
-        <div v-if="right_choice" class="answer">答案: <strong v-text="right_choice.toUpperCase()"></strong></div>
-        <div v-if="description" class="description">解析: <small v-html="description"></small></div>
+    <div class="block" id="answerZone">
+        <div class="answer">答案: <strong>{{sc.right_choice|upper}}</strong></div>
+        <div class="description">解析: <small>{{sc.description|safe}}</small></div>
         <p class="description">
-            <button class="button is-warning" :disabled="left_sc_counts === 1" @click="getOneQuestion">下一题</button>
+            <a class="button is-warning" href="{% url 'single-choice' %}">下一题</a>
         </p>
     </div>
 </div>
@@ -157,116 +160,6 @@
 
 {% block js %}
 <script src="{% static 'js/common.js' %}"></script>
+<script src="{% static 'js/exercise.js' %}"></script>
 <script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.js"></script>
-<script>
-    var app = new Vue({
-        el: '#app',
-        delimiters: ["{[", "]}"],
-        data: function () {
-            return {
-                sc: {
-                    tags: []
-                },
-                selected_block: null,
-                right_choice: '',
-                description: '',
-                daily_sc_counts: 0,
-                left_sc_counts: 0,
-            }
-        },
-        methods: {
-            getOneQuestion: function () {
-                fetch("{% url 'scstart' %}").then((res) => {
-                    if (!res.ok) {
-                        alert('今日答题次数已用完')
-                        throw new Error()
-
-                    } else {
-                        return res.json()
-                    }
-                }).then((data) => {
-                    this.resetInfo();
-                    this.sc = data;
-                    this.daily_sc_counts = data['daily_sc_counts'];
-                    this.left_sc_counts = data['left_sc_counts'];
-
-                })
-            },
-            postQuestion: function () {
-                if (!this.selected_block) {
-                    sweetAlert('info', '请先选择一个选项！')
-                    return;
-                }
-                if (this.right_choice) {
-                    return;
-                }
-                fetch("{% url 'scstart' %}", {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application.json',
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': getCookie('csrftoken'),
-                        'todo-sc-no': this.sc.no,
-                        'select-choice': this.selected_block.getAttribute('choice'),
-                    }
-                }).then((res) => res.json()).then((data) => {
-                    this.right_choice = data.right_choice;
-                    this.description = data.desc;
-                    this.selected_block.classList.remove('selected');
-                    if (this.left_sc_counts === 1) {
-                        this.left_sc_counts = 0
-                        sweetAlert('info', '今日答题次数已用完')
-                    }
-
-                    if (data.status === true) {
-                        this.selected_block.classList.add('success');
-                    } else {
-                        this.selected_block.classList.add('failed');
-                    }
-                })
-            },
-            selectOne: function (index) {
-                // 获取外层的choice_block
-                const block = this.$refs.choiceBlocks[index];
-                if (!block.classList.contains('choice_block')) {
-                    block = block.parentNode
-                }
-                // 二次点击取消选中状态
-                if (block.classList.contains('selected')) {
-                    block.classList.remove('selected')
-                    return
-                }
-                // 点击并选中其他block
-                choises = document.getElementsByClassName('choice_block')
-                for (let index = 0; index < choises.length; index++) {
-                    choises[index].classList.remove('selected')
-                }
-                block.classList.add('selected')
-                this.selected_block = block;
-            },
-            resetInfo: function () {
-                this.sc = { tags: [] }
-                this.selected_block = null
-                this.right_choice = ''
-                this.description = ''
-                choises = document.getElementsByClassName('choice_block')
-                for (let index = 0; index < choises.length; index++) {
-                    choises[index].classList.remove('selected')
-                    choises[index].classList.remove('success')
-                    choises[index].classList.remove('failed')
-                }
-            },
-        },
-        mounted() {
-            this.getOneQuestion()
-            // Vue实例渲染完成后执行的逻辑
-            document.getElementById('app').style.display = 'block';
-        },
-        updated() {
-            //保证v-html渲染的代码块高亮显示
-            Prism.highlightAll();
-        },
-    })
-</script>
 {% endblock %}

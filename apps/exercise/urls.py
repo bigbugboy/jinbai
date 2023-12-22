@@ -4,6 +4,5 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.index, name='exercise'),
-    path('scstart', views.ScStart.as_view(), name='scstart'),
+    path('single-choice', views.SingleChoice.as_view(), name='single-choice'),
 ]

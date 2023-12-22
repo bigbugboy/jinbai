@@ -47,3 +47,13 @@ class SingleChoice(models.Model):
     class Meta:
         verbose_name = '单选题'
         verbose_name_plural = verbose_name
+    
+    def update_stats(self, answer_collect: bool):
+        if answer_collect:
+            self.right_counts += 1
+        else:
+            self.wrong_counts += 1
+        try:
+            self.save()
+        except Exception as e:
+            pass
