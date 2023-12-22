@@ -40,6 +40,10 @@ function postQuestion() {
         sweetAlert('info', '请先选择一个选项！')
         return;
     }
+    if (confirmBtn.getAttribute('clicked')) {
+        sweetAlert('info', '次题已刷,请选择下一题')
+        return;
+    }
 
     let selectedNo = selectedBlock.getAttribute('scno');
     let selectedChoice = selectedBlock.getAttribute('choice');
@@ -50,6 +54,8 @@ function postQuestion() {
         selectedBlock.classList.add('failed');
     }
     answerZone.style.display = 'block';
+    confirmBtn.setAttribute('clicked', true)
+    // confirmBtn.setAttribute('disabled', true)
     
     fetch("/exercise/single-choice", {
         method: 'POST',

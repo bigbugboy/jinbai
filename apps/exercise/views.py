@@ -4,7 +4,7 @@ from datetime import date
 
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, HttpResponse
-from django.http import HttpRequest, JsonResponse, Http404
+from django.http import HttpRequest, HttpResponseBadRequest
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -25,13 +25,19 @@ class SingleChoice(View):
         context = {
             'sc': sc,
         }
+        request.session['todo_sc_no'] = sc.no
         return render(request, 'exercise.html', context)
 
     def post(self, request: HttpRequest):
         sc_no = request.headers['sc-no']
         select_choice = request.headers['choice']
-       
+
+        if request.session.get('todo_sc_no') != sc_no:
+            return HttpResponseBadRequest('bad')
+        
         sc = get_object_or_404(models.SingleChoice, no=sc_no)
         sc.update_stats(sc.right_choice == select_choice)
+        request.user.update_today_sc_nos(sc_no)
+        del request.session['todo_sc_no']
         return HttpResponse('ok')
 
