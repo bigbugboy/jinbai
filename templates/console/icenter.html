@@ -1,15 +1,48 @@
-{% extends 'base.html' %}
-
-{% block css %}
+{% extends 'console/base.html' %}
+{%block consolecss%}
 <style>
-    body {
-        height: 100vh !important;
+    #tovip{
+        cursor: pointer;
+        color: rgb(25, 132, 52);
+    }
+    #tovip:hover {
+        font-size: 20px;
     }
 </style>
 
-{% endblock %}
+{% endblock%}
 
-{% block content %}
-{% include 'partials/header.html' %}
-<h1 class="title m-6">个人中心</h1>
+
+
+{% block consolecontent %}
+
+<div class="p-4">
+    <div class="block">
+        用户名：<strong>{{request.user.username}}</strong>
+    </div>
+    <div class="block">
+        上次登陆时间：<strong>{{request.user.last_login|date:'Y-m-d H:i:s'}}</strong>
+    </div>
+    <div class="block">
+        账号类型：
+        {% if request.user.vip %}
+        <strong>VIP</strong>
+        {% else %}
+        <small style="color: black;">普通用户</small> | <strong id="tovip">升级为VIP</strong>
+        {% endif %}
+    </div>
+    <div class="block">
+        手机号：<strong>{{request.user.telephone}}</strong>
+    </div>
+    <div class="block">
+        邮箱：<strong>{{request.user.email}}</strong>
+    </div>
+    <div class="block">
+        今日答题数量：<strong>{{today_sc_counts}}</strong>
+    </div>
+    <div class="block">
+        收藏题目数量：<strong>{{collected_sc_counts}}</strong>
+    </div>
+</div>
+
 {% endblock %}

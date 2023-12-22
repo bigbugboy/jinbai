@@ -36,8 +36,9 @@ class SingleChoice(View):
             return HttpResponseBadRequest('bad')
         
         sc = get_object_or_404(models.SingleChoice, no=sc_no)
-        sc.update_stats(sc.right_choice == select_choice)
-        request.user.update_today_sc_nos(sc_no)
+        answer_correct = sc.right_choice == select_choice
+        sc.update_stats(answer_correct)
+        request.user.update_today_sc_nos(sc_no, answer_correct)
         del request.session['todo_sc_no']
         return HttpResponse('ok')
 

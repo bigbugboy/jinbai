@@ -48,8 +48,8 @@ class SingleChoice(models.Model):
         verbose_name = '单选题'
         verbose_name_plural = verbose_name
     
-    def update_stats(self, answer_collect: bool):
-        if answer_collect:
+    def update_stats(self, answer_correct: bool):
+        if answer_correct:
             self.right_counts += 1
         else:
             self.wrong_counts += 1

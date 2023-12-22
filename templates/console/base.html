@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block css %}
+<style>
+    .left-nav {
+        border: 1px solid #d3e0e9;
+    }
+
+    .right-display {
+        background-color: rgb(242, 242, 242);
+    }
+
+    .item {
+        display: block;
+        color: rgba(0, 0, 0, .87);
+        font-weight: 400;
+        line-height: 1;
+        padding: 0.92857143em 1.14285714em;
+        background-color: #fff;
+        border-bottom: 1px solid #d4d4d5;
+        text-align: center;
+    }
+
+    .item:hover {
+        background-color: rgb(242, 242, 242);
+    }
+
+    .item.active {
+        background: rgb(242, 242, 242);
+    }
+
+    .column.is-7{
+        flex:auto !important;
+    }
+</style>
+{%block consolecss%} {% endblock%}
+{% endblock %}
+
+{% block content %}
+{% include 'partials/header.html' %}
+
+<div class="columns mt-5 is-justify-content-space-around">
+    <div class="column mb-4 is-3">
+        <div class="left-nav">
+            <a href="{% url 'icenter' %}" class="item {%if 'icenter' in request.path_info%}active{%endif%}">个人信息</a>
+            <a href="{% url 'dailysc' %}" class="item {%if 'dailysc' in request.path_info%}active{%endif%}">今日答题</a>
+            <a href="{% url 'lovesc' %}" class="item {%if 'lovesc' in request.path_info%}active{%endif%}">收藏题目</a>
+            <a href="{% url 'editphone' %}" class="item {%if 'editphone' in request.path_info%}active{%endif%}">修改手机</a>
+            <a href="{% url 'bindemail' %}" class="item {%if 'bindemail' in request.path_info%}active{%endif%}">绑定邮箱</a>
+        </div>
+    </div>
+    <div class="column is-7">
+        <div class="right-display">
+            {% block consolecontent %} {% endblock %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
