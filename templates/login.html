@@ -11,14 +11,13 @@
   <script src="https://cdn.bootcdn.net/ajax/libs/sweetalert2/11.7.27/sweetalert2.all.js"></script>
   <style>
     body {
-      height: 100vh;
       background-image: url('{% static "img/bg.png" %}');
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
     }
     #login {
-      height: 100%;
+      height: 100vh;
     }
     .box {
       background-color: transparent !important;
@@ -92,6 +91,7 @@
     </div>
   </div>
 
+  {% include 'partials/footer.html' %}
 <script src="{% static 'js/common.js' %}"></script>
 <script src="{% static 'js/send-verify-code.js' %}"></script>
 </body>
