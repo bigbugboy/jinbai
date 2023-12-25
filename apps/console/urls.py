@@ -8,5 +8,5 @@ urlpatterns = [
     path('dailysc', views.dailysc, name='dailysc'),
     path('lovesc', views.lovesc, name='lovesc'),
     path('bindemail', views.bindemail, name='bindemail'),
-    path('editphone', views.editphone, name='editphone'),
+    path('bindphone', views.BindPhoneView.as_view(), name='bindphone'),
 ]

@@ -1,20 +1,24 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block css %}
 <style>
     .left-nav {
         border: 1px solid #d3e0e9;
+
+        border-radius: 10px;
     }
 
     .right-display {
-        background-color: rgb(242, 242, 242);
+        background-color: transparent !important;
+        border-radius: 10px;
+        box-shadow: 0 1.5em 2em 0.875em rgba(10, 10, 10, .1), 0 0 0 2px rgba(10, 10, 10, .02);
     }
 
     .item {
         display: block;
         color: rgba(0, 0, 0, .87);
         font-weight: 400;
-        line-height: 1;
         padding: 0.92857143em 1.14285714em;
         background-color: #fff;
         border-bottom: 1px solid #d4d4d5;
@@ -22,15 +26,22 @@
     }
 
     .item:hover {
-        background-color: rgb(242, 242, 242);
+        background-color: rgb(218, 246, 222);
     }
 
     .item.active {
-        background: rgb(242, 242, 242);
+        background: rgb(218, 246, 222);
     }
-
+    .item .icon {
+        width: 20px;
+        display: inline-block;
+        margin-right: 0.5rem !important;
+    }
     .column.is-7{
         flex:auto !important;
+    }
+    .title {
+        color: rgb(25, 132, 52) !important;
     }
 </style>
 {%block consolecss%} {% endblock%}
@@ -38,15 +49,31 @@
 
 {% block content %}
 {% include 'partials/header.html' %}
+{% include 'partials/sweetalert.html' %}
 
 <div class="columns mt-5 is-justify-content-space-around">
     <div class="column mb-4 is-3">
         <div class="left-nav">
-            <a href="{% url 'icenter' %}" class="item {%if 'icenter' in request.path_info%}active{%endif%}">个人信息</a>
-            <a href="{% url 'dailysc' %}" class="item {%if 'dailysc' in request.path_info%}active{%endif%}">今日答题</a>
-            <a href="{% url 'lovesc' %}" class="item {%if 'lovesc' in request.path_info%}active{%endif%}">收藏题目</a>
-            <a href="{% url 'editphone' %}" class="item {%if 'editphone' in request.path_info%}active{%endif%}">修改手机</a>
-            <a href="{% url 'bindemail' %}" class="item {%if 'bindemail' in request.path_info%}active{%endif%}">绑定邮箱</a>
+            <a href="{% url 'icenter' %}" class="item is-flex {%if 'icenter' in request.path_info%}active{%endif%}">
+                <img src="{% static 'img/user.svg' %}" class="icon">
+                <span>个人信息</span>
+            </a>
+            <a href="{% url 'dailysc' %}" class="item is-flex {%if 'dailysc' in request.path_info%}active{%endif%}">
+                <img src="{% static 'img/star.svg' %}" class="icon">
+                <span>今日答题</span>
+            </a>
+            <a href="{% url 'lovesc' %}" class="item is-flex {%if 'lovesc' in request.path_info%}active{%endif%}">
+                <img src="{% static 'img/heart.svg' %}" class="icon">
+                <span>收藏题目</span>
+            </a>
+            <a href="{% url 'bindphone' %}" class="item is-flex {%if 'editphone' in request.path_info%}active{%endif%}">
+                <img src="{% static 'img/smartphone.svg' %}" class="icon">
+                <span>修改手机</span>
+            </a>
+            <a href="{% url 'bindemail' %}" class="item is-flex {%if 'bindemail' in request.path_info%}active{%endif%}">
+                <img src="{% static 'img/mail.svg' %}" class="icon">
+                <span>绑定邮箱</span>
+            </a>
         </div>
     </div>
     <div class="column is-7">

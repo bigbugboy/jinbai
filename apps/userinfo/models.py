@@ -15,8 +15,17 @@ class User(AbstractUser):
 
     def update_today_sc_nos(self, no, answer_correct):
         today = str(date.today())
-        nos = self.today_sc_nos.get(today, [])
+        nos = self.today_sc_nos.get(today, {})
         if no not in nos:
-            nos.append({'no': no, 'ac': answer_correct})
-        self.today_sc_nos = {today: sorted(nos, key=lambda x: x['no'])}
+            nos[no] = {'no': no, 'ac': answer_correct}
+        else:
+            nos[no]['ac'] = answer_correct
+
+        self.today_sc_nos = {today: nos}
         self.save()
+    
+    def get_today_sc_nos(self):
+        today = str(date.today())
+        nos = self.today_sc_nos.get(today, {})
+        return nos
+       

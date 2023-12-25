@@ -1,7 +1,7 @@
 const telephoneField = document.getElementById('telephone')
 const verifycodeField = document.getElementById('code')
 const sendcodebtn = document.getElementById('sendcodebtn')
-const loginbtn = document.getElementById('loginbtn')
+const postBtn = document.getElementById('postBtn')
 
 
 // 如下方法来自 common.js
@@ -52,12 +52,17 @@ sendcodebtn.addEventListener('click', () => {
 })
 
 
-loginbtn.addEventListener('click', (e) => {
+postBtn.addEventListener('click', (e) => {
     const telephone = telephoneField.value;
     const verifycode = verifycodeField.value;
     if (!telephone || !verifycode){
         e.preventDefault();
         sweetAlert('error', '手机号和验证码不能为空')
+        return;
+    }
+    if (!sendcodebtn.hasAttribute('disabled')) {
+        e.preventDefault();
+        sweetAlert('error', '请先获取验证码')
         return;
     }
 })

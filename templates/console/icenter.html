@@ -17,6 +17,7 @@
 {% block consolecontent %}
 
 <div class="p-4">
+    <h1 class="title">个人信息</h1>
     <div class="block">
         用户名：<strong>{{request.user.username}}</strong>
     </div>
@@ -28,14 +29,19 @@
         {% if request.user.vip %}
         <strong>VIP</strong>
         {% else %}
-        <small style="color: black;">普通用户</small> | <strong id="tovip">升级为VIP</strong>
+        <span>普通用户&nbsp;<a href="#">去升级为VIP</a></span>
         {% endif %}
     </div>
     <div class="block">
         手机号：<strong>{{request.user.telephone}}</strong>
     </div>
     <div class="block">
-        邮箱：<strong>{{request.user.email}}</strong>
+        邮箱：
+        {%if request.user.email%}
+            <strong>{{request.user.email}}</strong>
+        {%else%} 
+            <a href="{% url 'bindemail' %}">绑定邮箱</a>
+        {%endif%}
     </div>
     <div class="block">
         今日答题数量：<strong>{{today_sc_counts}}</strong>
