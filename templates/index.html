@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block css %}
+<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet">
 <style>
   .box {
     background-color: transparent !important;
     color: rgb(25, 132, 52) !important;
     box-shadow: 0 1.5em 2em 0.875em rgba(10, 10, 10, .1), 0 0 0 2px rgba(10, 10, 10, .02);
+    padding: 2px !important;
   }
 
   #sc-info {
@@ -22,8 +24,8 @@
 {% include 'partials/sweetalert.html' %}
 <section class="section">
   <div class="columns mt-6 is-justify-content-center">
-    <div class="column is-12-mobile is-5-tablet is-5-desktop is-6-widescreen is-6-fullhd has-text-left has-text-centered-mobile">
-      <h1 class="title my-6">让 Python 更扎实</h1>
+    <div class="column is-12-mobile is-5-tablet is-5-desktop is-4-widescreen is-4-fullhd has-text-left has-text-centered-mobile">
+      <h1 class="title">让 Python 更扎实</h1>
       <p class="my-3 is-size-5">优雅胜于丑陋，简单胜于复杂</p>
       <p class="my-3 is-size-5">简单优于复杂，复杂优于凌乱</p>
       <p class="my-3 is-size-5">扁平优于嵌套，稀疏优于稠密</p>
@@ -31,20 +33,8 @@
       <p class="mt-4 mb-6 is-size-6">—— Python之禅</p>
       <a href="{% url 'single-choice' %}" class="button is-success is-outlined is-rounded has-text-centered">开始吧</a>
     </div>
-    <div class="column">
-      <div class="box">
-        <p class="block" id="sc-info">
-          <span class="mr-6"><small class="mr-2">题号:</small>123456</span>
-          <span><small class="mr-2">标签:</small>字符串</span>
-        </p>
-        <h1 class="is-size-5">关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是关于组合数据类型的描述，正确的选项是：</h1>
-        <p>1 def test():</p>
-        <p>2 print(a)</p>
-        <p> a = 100</p>
-        <p>4</p>
-        <p>5 test()</p>
-      </div>
-
+    <div class="column box">
+      {% include 'partials/carousel.html' %}
     </div>
   </div>
 </section>
@@ -69,4 +59,9 @@
     </div>
   </div>
 </section>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
 {% endblock %}
