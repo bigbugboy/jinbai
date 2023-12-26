@@ -1,6 +1,8 @@
 const choiceBlocks = document.getElementsByClassName('choice_block')
 const confirmBtn = document.getElementById('confirmbtn')
 const answerZone = document.getElementById('answerZone')
+const selectStarForm = document.getElementById('selectStarForm')
+const selectStar = document.getElementById('selectStar')
 
 
 var selectedBlock
@@ -11,6 +13,7 @@ for (let index = 0; index < choiceBlocks.length; index++) {
 }
 
 confirmBtn.addEventListener('click', postQuestion);
+selectStar.addEventListener('change', getQuestion);
 
 
 function selectOne(e) {
@@ -65,4 +68,8 @@ function postQuestion() {
             'sc-no': selectedNo,
         }
     })
+}
+
+function getQuestion() {
+    selectStarForm.submit()
 }

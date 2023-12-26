@@ -2,18 +2,32 @@
 {% load static %}
 
 {% block css %}
-<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet">
+
 <style>
   .box {
     background-color: transparent !important;
     color: rgb(25, 132, 52) !important;
     box-shadow: 0 1.5em 2em 0.875em rgba(10, 10, 10, .1), 0 0 0 2px rgba(10, 10, 10, .02);
-    padding: 2px !important;
   }
 
   #sc-info {
     padding-bottom: 4px;
     border-bottom: 3px solid rgb(25, 132, 52);
+  }
+  .desc-item {
+    width: 270px;
+    padding: 20px !important;
+    margin-bottom: 20px !important;
+  }
+  .desc-title {
+    font-size: 20px;
+    border-bottom: 5px solid rgb(25, 132, 52);
+    margin-bottom: 0px;
+  }
+  .desc-num {
+    font-size: 60px;
+    font-weight: normal;
+    margin-right: 10px;
   }
 </style>
 {% endblock %}
@@ -24,7 +38,8 @@
 {% include 'partials/sweetalert.html' %}
 <section class="section">
   <div class="columns mt-6 is-justify-content-center">
-    <div class="column is-12-mobile is-5-tablet is-5-desktop is-4-widescreen is-4-fullhd has-text-left has-text-centered-mobile">
+    <div
+      class="column is-12-mobile is-5-tablet is-5-desktop is-4-widescreen is-4-fullhd has-text-left has-text-centered-mobile">
       <h1 class="title">让 Python 更扎实</h1>
       <p class="my-3 is-size-5">优雅胜于丑陋，简单胜于复杂</p>
       <p class="my-3 is-size-5">简单优于复杂，复杂优于凌乱</p>
@@ -38,30 +53,44 @@
     </div>
   </div>
 </section>
+<section class="section">
+  <div class="is-flex is-flex-wrap-wrap is-justify-content-space-around">
+    <div class="box desc-item">
+      <p class="desc-title">用户数</p>
+      <p ><strong class="desc-num">1</strong>万</p>
+      <p><small>本站注册用户数 11201</small></p>
+    </div>
+    <div class="box desc-item">
+      <p class="desc-title">单选题数量</p>
+      <p ><strong class="desc-num">5</strong>千</p>
+      <p><small>本站整理单选题数量 5800</small></p>
+    </div>
+    <div class="box desc-item">
+      <p class="desc-title">编程题数量</p>
+      <p ><strong class="desc-num">2</strong>千</p>
+      <p><small>本站整理编程题数量 2100</small></p>
+    </div>
+  </div>
+</section>
 
 <!-- 会费价格 -->
-<section id="vip" style="display: none;">
+<section id="vip">
   <div class="has-text-centered py-6">
-    <h1 class="title">暂未开通</h1>
-    <p>敬请期待</p>
+    <h1 class="title">VIP会员</h1>
+    <p>VIP权利： <strong>解锁全部题目、收藏题目、在线编程、答疑群、等等</strong></p>
   </div>
   <!-- 2种会费方式 -->
   <div class="columns is-justify-content-center">
     <div class="column has-text-centered is-12-mobile is-4-tablet m-6">
-      <h1 class="title">&yen;7</h1>
-      <h3 class="subtitle">7天</h3>
-      <button class="button is-info is-outlined is-rounded">Get started</button>
+      <h1 class="title">&yen;1</h1>
+      <h3 class="subtitle">1天尝鲜版</h3>
+      <button class="button is-info is-outlined is-rounded" onclick="alert('暂无开通,敬请期待')">Get started</button>
     </div>
     <div class="column has-text-centered is-12-mobile is-4-tablet m-6">
       <h1 class="title">&yen;10</h1>
-      <h3 class="subtitle">30天</h3>
-      <button class="button is-info is-outlined is-rounded">Get started</button>
+      <h3 class="subtitle">永久会员版</h3>
+      <button class="button is-info is-outlined is-rounded" onclick="alert('暂无开通,敬请期待')">Get started</button>
     </div>
   </div>
 </section>
-{% endblock %}
-
-{% block js %}
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
 {% endblock %}

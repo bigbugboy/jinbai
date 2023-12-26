@@ -25,9 +25,14 @@ class SingleChoice(models.Model):
         (2, '上架'),
         (0, '下架'),
     )
+    star_choices = (
+        (1, '1颗星'),
+        (2, '2颗星'),
+        (3, '3颗星'),
+    )
 
     tag = models.ForeignKey(to=Tag, on_delete=models.SET_NULL, null=True)
-    star = models.SmallIntegerField(default=1, choices=((i + 1, f'{i+1}颗星')for i in range(3)), help_text='难度系数')
+    star = models.SmallIntegerField(default=1, choices=star_choices, help_text='难度系数')
     no = models.CharField(max_length=15, blank=False, null=False, unique=True, help_text='题目唯一编号')
     title = RichTextField(blank=False, null=False)
     choice_a = RichTextField(max_length=255, null=False)
