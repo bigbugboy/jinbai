@@ -1,0 +1,77 @@
+<div class="modal" id="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">用户协议</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="content">
+                <h1>小飞牛平台账号许可协议</h1>
+                <h2>基本定义</h2>
+                <p>小飞牛账号：指xiaofeiniu.top平台提供的用户账号，自由注册，不受限制</p>
+                <p>平台：小飞牛平台的简称</p>
+                <p>用户：使用小飞牛账号的用户</p>
+
+                <h2>协议内容</h2>
+                <p>平台对小飞牛账号有最终解释和处置权，包括：创建、修改、冻结和删除账号等权利。</p>
+                <p>平台在技术条件允许的情况下保存用户数据，但不承诺对数据进行永久保护。</p>
+                <p>平台在技术条件允许的情况下保护用户数据安全，但不承诺对数据安全进行严密保障。</p>
+                <p>平台在技术条件允许的情况下保护用户隐私数据不被泄露。</p>
+                <p>平台对所提供的所有资源（包括但不限于：课程、习题、专题、视频、文本资料等）都存在所有权人，标明所有权人的归属明确，未标明所有权人的归平台所有；所有资源著作权、专利权、商标专用权及其它知识产权，均为所有权人所有。未经所有权人授权，所有资源均不得转载、链接、转贴或以其他方式复制发表，任何未获得所有权人授权的商业用途（包括线下、出版物、线上平台等）都可能被所有权人追究法律责任，平台将帮助所有权人维护合法权益。
+                </p>
+                <p>未获得所有权人授权，将平台所提供的资源发布在第三方平台，尽管未进行商业用途，也可能被所有权人追求法律责任，平台将帮助所有权人维护合法权益。</p>
+            </div>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button">关闭</button>
+        </footer>
+    </div>
+</div>
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Functions to open and close a modal
+        function openModal($el) {
+            $el.classList.add('is-active');
+        }
+
+        function closeModal($el) {
+            $el.classList.remove('is-active');
+        }
+
+        function closeAllModals() {
+            (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+                closeModal($modal);
+            });
+        }
+
+        // Add a click event on buttons to open a specific modal
+        (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+            const $target = document.getElementById('modal');
+
+            $trigger.addEventListener('click', () => {
+                openModal($target);
+            });
+        });
+
+        // Add a click event on various child elements to close the parent modal
+        (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+            const $target = $close.closest('.modal');
+
+            $close.addEventListener('click', () => {
+                closeModal($target);
+            });
+        });
+
+        // Add a keyboard event to close all modals
+        document.addEventListener('keydown', (event) => {
+            if (event.code === 'Escape') {
+                closeAllModals();
+            }
+        });
+    });
+</script>

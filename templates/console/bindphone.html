@@ -34,7 +34,8 @@
 
 {% block consolecontent %}
 <div class="p-4">
-    <h1 class="title">绑定手机</h1>
+    <h1 class="title" id="title">绑定手机</h1>
+    
     <div id="tips"> Tips：手机号可用作登录账号，也可用来找回密码。</div>
     {% if not edit_page %}
     <div class="block" id="currentPhone">当前绑定手机号码：<strong>{{ request.user.telephone }}</strong></div>

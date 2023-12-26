@@ -4,7 +4,7 @@
         padding: 10px !important;
     }
 
-    .title {
+    .navbar-item .title {
         color: rgb(25, 132, 52) !important;
     }
 
@@ -53,7 +53,7 @@
                 </a>
 
                 <div class="navbar-dropdown">
-                    <a class="navbar-item is-flex">
+                    <a class="navbar-item is-flex" href="{% url 'dailysc' %}">
                         <img src="{% static 'img/star.svg' %}" class="icon">
                         <span>我的题目</span>
                     </a>

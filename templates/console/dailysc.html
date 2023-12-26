@@ -1,37 +1,48 @@
 {% extends 'console/base.html' %}
-
+{% load static %}
 
 
 {% block consolecontent %}
-
 <div class="p-4">
-    <h1 class="title">今日答题</h1>
+    <h1 class="title" id="title">今日答题</h1>
 
-    {% if daily_sc_stats %}
-    <table class="table is-striped is-hoverable is-fullwidth mt-4">
+    {% if daily_scs %}
+    <table class="table is-striped is-hoverable is-fullwidth">
         <thead>
             <tr>
                 <th>序号</th>
                 <th>题号</th>
                 <th>标签</th>
                 <th>答对了吗</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            {% for sc in daily_sc_stats %}
+            {% for sc in daily_scs %}
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ sc.no }}</td>
                 <td>{{ sc.tag }}</td>
-                <td>{{ sc.correct }}</td>
+                <td>
+                    {% if sc.correct %}
+                    <img src="{% static 'admin/img/icon-yes.svg' %}" alt="">
+                    {% else %}
+                    <img src="{% static 'admin/img/icon-no.svg' %}" alt="">
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="button is-outlined is-small" href="{% url 'sc-daily-detail' sc.no %}" target="_blank">详情</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
 
     </table>
     {% else %}
-    <p class="p-6">暂无数据</p>
+    <p class="p-6">
+        <span>暂无数据,</span> &nbsp;
+        <a href="{% url 'single-choice' %}">开始今天的答题之旅吧</a>
+    </p>
     {% endif %}
 </div>
-
 {% endblock %}

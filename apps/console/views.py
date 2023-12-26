@@ -22,17 +22,13 @@ def icenter(request: HttpRequest):
 @login_required(login_url='login')
 def dailysc(request):
     today_sc_nos = request.user.get_today_sc_nos()
-    data = SingleChoice.objects.filter(no__in=list(today_sc_nos.keys())).all()
-    # todo: 需要展示哪些数据，如何展示？
+    queryset = SingleChoice.objects.filter(no__in=list(today_sc_nos.keys())).all()
+    
+    for sc in queryset:
+        sc.correct = today_sc_nos[sc.no]['ac']
+
     context = {
-        'daily_sc_stats':[
-            {
-                'no': sc.no,
-                'tag': sc.tag.name,
-                'correct': today_sc_nos[sc.no]['ac'],
-            }
-            for sc in data
-        ]
+        'daily_scs': queryset
     }
     return render(request, 'console/dailysc.html', context)
 
