@@ -21,6 +21,11 @@ DOMAIN = os.environ['DOMAIN']
 DEBUG = False if ENV == 'PROD' else True
 ALLOWED_HOSTS = ['*'] if DEBUG else [DOMAIN]
 
+if not DEBUG:
+    import pymysql
+
+    pymysql.install_as_MySQLdb()
+
 # Application definition
 
 INSTALLED_APPS = [
