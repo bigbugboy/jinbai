@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'apps.userinfo.middlewares.SuperUserAdminMiddleware',
 ]
 
 ROOT_URLCONF = 'jinbai.urls'
