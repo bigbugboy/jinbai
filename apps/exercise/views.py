@@ -19,7 +19,9 @@ class SingleChoice(View):
     def get(self, request: HttpRequest):
         vip = request.user.vip
         star = request.GET.get('star', 1) if vip else 1
-        if not star.isdigit() or int(star) not in [s[0] for s in models.SingleChoice.star_choices]:
+        if isinstance(star, str) and not str.isdigit():
+            raise Http404()
+        if int(star) not in [s[0] for s in models.SingleChoice.star_choices]:
             raise Http404()
         
         # 过滤出来满足条件的上架题目

@@ -3,3 +3,4 @@ pymysql
 django-ckeditor==6.7.0
 python-dotenv==1.0.0
 alibabacloud_dysmsapi20170525==2.0.24
+gunicorn
