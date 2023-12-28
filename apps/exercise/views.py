@@ -19,7 +19,7 @@ class SingleChoice(View):
     def get(self, request: HttpRequest):
         vip = request.user.vip
         star = request.GET.get('star', 1) if vip else 1
-        if isinstance(star, str) and not str.isdigit():
+        if isinstance(star, str) and not star.isdigit():
             raise Http404()
         if int(star) not in [s[0] for s in models.SingleChoice.star_choices]:
             raise Http404()
