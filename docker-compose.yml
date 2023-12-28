@@ -13,6 +13,11 @@ services:
       - ALIYUN_ACCESSKEY_SECERT = ${ALIYUN_ACCESSKEY_SECERT}
       - ALIYUN_SAMPLE_SIGNNAME = ${ALIYUN_SAMPLE_SIGNNAME}
       - STATIC_ROOT = ${STATIC_ROOT}
+      - DB_NAME = ${DB_NAME}
+      - DB_USER = ${DB_USER}
+      - DB_PASSWORD = ${DB_PASSWORD}
+      - DB_HOST = ${DB_HOST}
+      - DB_PORT = ${DB_PORT}
   nginx:
     image: nginx:alpine
     volumes: 
