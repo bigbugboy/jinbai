@@ -18,7 +18,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 ENV = os.environ['ENV']
 DOMAIN = os.environ['DOMAIN']
 
-DEBUG = False if ENV == 'PROD' else True
+DEBUG = True if int(os.environ['DEBUG']) else False
 ALLOWED_HOSTS = ['*'] if DEBUG else [DOMAIN]
 
 if not DEBUG:

@@ -32,6 +32,7 @@ class LoginView(View):
                 defaults={'telephone': telephone, 'username': str(telephone)}
             )
             auth.login(request, user)
+            cache.delete(settings.TELEPHONE_VERIFY_CODE_KEY % telephone)
             messages.success(request, f'欢迎:{user.telephone}')
             return redirect(to='index')
         
