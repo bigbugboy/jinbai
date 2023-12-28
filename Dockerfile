@@ -4,5 +4,7 @@ COPY . /var/www/src
 WORKDIR /var/www/src/
 
 RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+RUN python manage.py collectstatic
 
-CMD ["python", "manage.py", "runserver", "0:8000"]
+
+CMD ["/usr/local/bin/gunicorn", "-b", "0.0.0.0:3001", "jinbai.wsgi:application"]
